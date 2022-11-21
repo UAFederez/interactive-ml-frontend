@@ -1,0 +1,41 @@
+.paramInput > div {
+    margin: 0.5em auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.paramInput > div > div {
+    flex: 1 1 45%;
+    display: flex;
+    flex-direction: column;
+    padding-right: 0.5em;
+}
+
+.paramInput > div > div > label {
+    flex: 1;
+}
+
+.paramInput input {
+    flex: 1;
+    font-size: 1em;
+}
+
+.paramInput > div > div > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.paramInput > div > div > div > label {
+    padding-left: .5em;
+    font-family: sans-serif;
+}
+
+.dataset-plot {
+    display: flex;
+}
+
+.dataset-plot > div {
+    flex: 1;
+}

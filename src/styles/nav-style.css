@@ -1,0 +1,39 @@
+.nav-container {
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: row;
+    color: #0D0A0B;
+    background-color: #f7f7f7;
+    padding: 1em 0em;
+    justify-content: space-between;
+}
+
+.nav-container .logo-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    margin-left: 1em;
+}
+
+.nav-container nav {
+    display: flex;
+    flex-direction: row;
+}
+
+.nav-container nav ul {
+    display: flex;
+}
+
+.nav-container nav ul li {
+    padding: 0em 1em;
+}
+
+.nav-container nav ul li a {
+    color: #0D0A0B;
+    font-family: 'IBM Plex Sans', sans-serif;
+    text-decoration: none;
+}

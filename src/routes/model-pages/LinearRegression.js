@@ -1,171 +1,404 @@
+import { MathJax } from "better-react-mathjax";
 import React from "react";
-import MathJax from "react-mathjax";
+import Plot from "react-plotly.js";
+import "../../styles/article-style.css";
+import "../../styles/linear-regression-uni-styles.css";
 
 export default class LinearRegression extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            trueCoeff: 1,
+            trueBias: 0,
+            noiseFac: 0.25,
+            numPoints: 25,
+            train_x: [],
+            train_y: [],
+            loss_x: [],
+            loss_y: [],
+            loss_z: [],
+        };
+    }
+
+    componentDidMount() {
+        this.regenerateDataset();
+    }
+
+    // Obtain a random variable that is approximately
+    // distributed by a Gaussian (mu = 0, var = 1)
+    // From: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
+    boxMullerTransform = () => {
+        let u = 1 - Math.random();
+        let v = Math.random();
+        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    };
+
+    computeLoss = () => {
+        const size = 25;
+        let x = new Array(size);
+        let y = new Array(size);
+        let z = new Array(size);
+
+        const step = 10.0 / size;
+        for (let i = 0; i < size; i++) {
+            x[i] = y[i] = -5.0 + (i + 1.0) * step;
+            z[i] = new Array(size);
+        }
+
+        for (let i = 0; i < size; i++) {
+            for (let j = 0; j < size; j++) {
+                let loss_ij = 0.0;
+                for (let n = 0; n < this.state.numPoints; n++) {
+                    const y_pred = x[i] * this.state.train_x[n] + y[j];
+                    const y_true = this.state.train_y[n];
+                    loss_ij += (y_pred - y_true) ** 2 / this.state.numPoints;
+                }
+                z[i][j] = loss_ij;
+            }
+        }
+
+        this.setState({
+            loss_x: x,
+            loss_y: y,
+            loss_z: z,
+        });
+    };
+
+    regenerateDataset = () => {
+        // Since the points range from [-1, 1], then the distance is 2
+        const step = 2.0 / this.state.numPoints;
+        let train_x = [];
+        let train_y = [];
+        for (let i = 0; i < this.state.numPoints; i++) {
+            const x_val = -1.0 + (i + 1) * step;
+            const noise = this.state.noiseFac * this.boxMullerTransform();
+            train_x.push(x_val);
+            train_y.push(
+                this.state.trueCoeff * x_val + this.state.trueBias + noise
+            );
+        }
+
+        this.setState(
+            {
+                train_x: train_x,
+                train_y: train_y,
+            },
+            () => {
+                this.computeLoss();
+            }
+        );
+    };
+
+    handleChange = (event) => {
+        this.setState(
+            {
+                [event.target.name]: Number(event.target.value),
+            },
+            () => {
+                this.regenerateDataset();
+            }
+        );
+    };
+
     render() {
         return (
-            <div>
-                <h1>Linear Regression</h1>
-                <MathJax.Provider>
-                    Given a set of <MathJax.Node inline formula={"m"} />{" "}
-                    training examples{" "}
-                    <MathJax.Node
-                        inline
-                        formula={"\\left(x^{(i)}, y^{(i)}\\right)"}
-                    />{" "}
-                    for all{" "}
-                    <MathJax.Node inline formula={"i\\in[1,\\ldots,m]"} />, a
-                    linear regression model is a supervised learning regression
-                    model which expresses{" "}
-                    <MathJax.Node
-                        inline
-                        formula={"f(x^{(i)})=\\hat{y}^{(i)}"}
-                    />{" "}
-                    as a linear function of{" "}
-                    <MathJax.Node inline formula={"x^{(i)}"} /> given parameters{" "}
-                    <MathJax.Node inline formula={"w"} /> and{" "}
-                    <MathJax.Node inline formula={"b"} /> as follows:
-                    <MathJax.Node
-                        formula={"\\hat{y}^{(i)}=w\\cdot x^{(i)}+b"}
-                    />
-                    The model is a supervised learning model because the
-                    training set contains the "*right*" or expected output value
-                    for the target variable for every{" "}
-                    <MathJax.Node inline formula={"x^{(i)}"} />, and a
-                    regression model because the model outputs a continuous
-                    value. Linear regression with one variable is known as a
-                    *univariate* linear regression, i.e,{" "}
-                    <MathJax.Node inline formula={"x^{(i)}\\in\\mathbb{R}"} />{" "}
-                    while *multivariate* linear regression is one wherein{" "}
-                    <MathJax.Node
-                        inline
-                        formula={"x^{(i)}\\in\\mathbb{R}^{n}"}
-                    />{" "}
-                    for <MathJax.Node inline formula={"n>1"} /> features. ##
-                    Cost Function The goal of the linear regression model is to
-                    find optimal parameters{" "}
-                    <MathJax.Node inline formula={"\\vec{w}"} /> and{" "}
-                    <MathJax.Node inline formula={"b"} /> such that for every
-                    training example{" "}
-                    <MathJax.Node
-                        inline
-                        formula={"\\left(x^{(i)}, y^{(i)}\\right)"}
-                    />{" "}
-                    for <MathJax.Node inline formula={"i\\in[1,\\ldots,m]"} />
-                    <MathJax.Node formula={"f(x^{(i)})\\approx y^{(i)}"} />
-                    Therefore, it helps to provide a precise measure of how *far
-                    off* the predicted outputs are from the expected output.
-                    This can be formalized as a cost function{" "}
-                    <MathJax.Node inline formula={"J"} />. A useful cost
-                    function for linear regression is the *mean squared error*,
-                    <MathJax.Node
-                        formula={
-                            "J(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)} - y^{(i)}\\right)^2"
-                        }
-                    />
-                    One of the benefits of the{" "}
-                    <MathJax.Node inline formula={"\\frac{1}{m}"} /> is that
-                    without it, as <MathJax.Node inline formula={"m"} /> gets
-                    larger, the value of the cost function gets larger as well.
-                    Therefore it helps to build a cost function that does not
-                    change significantly just because the size of the dataset
-                    increases. The <MathJax.Node inline formula={"2"} /> in{" "}
-                    <MathJax.Node inline formula={"2m"} /> simplifies the
-                    calculation of the gradient later on given that the minimum
-                    of <MathJax.Node inline formula={"f(x)"} /> is the same as
-                    the minimum of{" "}
-                    <MathJax.Node inline formula={"\\frac{1}{2}f(x)"} />. Given
-                    the cost function, the goal is to find optimal parameters{" "}
-                    <MathJax.Node inline formula={"w^*"} /> and{" "}
-                    <MathJax.Node inline formula={"b^*"} /> which minimize{" "}
-                    <MathJax.Node inline formula={"J(w,b)"} />, i.e,
-                    <MathJax.Node formula={"(w^*,b^*)=\\min_{w,b}J(w,b)"} />
-                    <h2>Why Use the Mean Squared Error?</h2>
-                    The mean squared error cost function comes from a
-                    statistical method known as *maximum likelihood estimation*.
-                    Recall that the underlying assumption for linear regression
-                    is that the data is accurately modelled with a linear
-                    function. The error terms are assumed to be{" "}
-                    <MathJax.Node inline formula={"\\text{i.i.d}"} /> from a
-                    normal distribution with mean{" "}
-                    <MathJax.Node inline formula={"0"} /> and constant variance{" "}
-                    <MathJax.Node inline formula={"\\sigma^2"} />, i.e for all{" "}
-                    <MathJax.Node inline formula={"i\\in[1,\\ldots,m]"} />,
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}\\hat{y}^{(i)}&=w_{\\text{true}}x^{(i)}+b_{\\text{true}}+\\epsilon\\quad\\text{where }\\epsilon\\overset{i.i.d}{\\sim}\\mathcal{N}(0,\\sigma^2)\\\\\\hat{y}^{(i)}&=y^{(i)}+\\epsilon\\\\\\epsilon&=\\hat{y}^{(i)}-y^{(i)}\\end{align*}"
-                        }
-                    />
-                    Thus the probability density function of the error terms for
-                    each sample{" "}
-                    <MathJax.Node inline formula={"\\epsilon^{(i)}"} /> for{" "}
-                    <MathJax.Node inline formula={"i\\in[1,\\ldots,m]"} /> are
-                    represented with a Gaussian or normal distribution with
-                    parameters <MathJax.Node inline formula={"\\mu=0"} /> and{" "}
-                    <MathJax.Node inline formula={"\\theta_2=\\sigma^2"} /> as
-                    follows
-                    <MathJax.Node
-                        formula={
-                            "f(\\epsilon^{(i)};0,\\theta_2)=\\frac{1}{\\sqrt{\\theta_2}\\sqrt{2\\pi}}\\exp\\left[-\\frac{1}{2}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{\\theta_2}\\right]"
-                        }
-                    />
-                    The *likelihood*, represents the joint probability density
-                    fuction of observing the data that was gathered. Assuming
-                    that all samples are independent this is simply the product
-                    of all the probability density fuctions for{" "}
-                    <MathJax.Node inline formula={"\\epsilon"} />
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}L(\\theta_2)&=f(x_1;0,\\theta_2)\\cdot f(x_2;0,\\theta_2)\\cdot\\dots\\cdot f(x_n;0,\\theta_2)\\\\&=\\prod_{i=1}^{m}f(\\hat{y}^{(i)}-y^{(i)};0,\\theta_2)\\end{align*}"
-                        }
-                    />
-                    The goal is to find the value{" "}
-                    <MathJax.Node inline formula={"\\theta_2"} /> which
-                    *maximizes* the likelihood of seeing the data that was
-                    gathered given these parameters. In this case, given the
-                    probability density function of the normally distributed
-                    error terms
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}L(\\theta_2)=\\prod_{i=1}^{m}\\left(\\frac{1}{\\sqrt{\\theta_2}\\sqrt{2\\pi}}\\exp\\left[-\\frac{1}{2}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{\\theta_2}\\right]\\right)\\\\=\\theta_2^{-{\\frac{m}{2}}}(2\\pi)^{-{\\frac{m}{2}}}\\exp\\left[\\sum_{i=1}^{m}-\\frac{1}{2}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{\\theta_2}\\right]\\end{align*}"
-                        }
-                    />
-                    Given that the <MathJax.Node inline formula={"\\log(x)"} />{" "}
-                    is a strictly increasingly monotic function, i.e, for every{" "}
-                    <MathJax.Node inline formula={"x_1<x_2"} />,{" "}
-                    <MathJax.Node inline formula={"f(x_1)<f(x_2)"} />, then the
-                    maximum of <MathJax.Node inline formula={"L(\\theta_2)"} />{" "}
-                    is also a maximum of the{" "}
-                    <MathJax.Node
-                        inline
-                        formula={"\\log\\left(L(\\theta_2)\\right)"}
-                    />
-                    . This allows the derivation to be more convenient based on
-                    the properties of <MathJax.Node inline formula={"\\log"} />
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}\\log\\left(L(\\theta_2)\\right)&=\\log\\left(\\theta_2^{-{\\frac{m}{2}}}(2\\pi)^{-{\\frac{m}{2}}}\\exp\\left[\\sum_{i=1}^{m}-\\frac{1}{2}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{\\theta_2}\\right]\\right)\\\\&=-\\frac{m}{2}\\log(\\theta_2)-\\frac{m}{2}\\log(2\\pi)-\\frac{1}{2m}\\sum_{i=1}^{m}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{\\theta_2}\\end{align*}"
-                        }
-                    />
-                    Taking the partial derviative w.r.t to{" "}
-                    <MathJax.Node inline formula={"\\theta_2"} /> and setting it
-                    to <MathJax.Node inline formula={"0"} />
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}\\frac{\\partial\\log\\left(L(\\theta_2)\\right)}{\\partial \\theta_2}&=-\\frac{m}{2\\theta_2}+\\sum_{i=1}^{m}\\frac{\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2}{2{\\theta_2}^2}\\\\0\\times 2\\theta_2^2&=\\left(-\\frac{m}{2\\theta_2}+\\frac{1}{2{\\theta_2}^2}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\right)\\times 2{\\theta_2}^2\\\\0&=-{\\theta_2 m}+\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\end{align*}"
-                        }
-                    />
-                    Setting the equation to{" "}
-                    <MathJax.Node inline formula={"0"} /> allows us to solve for{" "}
-                    <MathJax.Node inline formula={"\\theta_2"} />, i.e, the
-                    maximum likelihood estimator for the variance of the error
-                    terms.
-                    <MathJax.Node
-                        formula={
-                            "\\begin{align*}0&=-{\\theta_2 m}+\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\\\\\theta_2&=\\frac{1}{m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\end{align*}"
-                        }
-                    />
-                </MathJax.Provider>
+            <div className="article content">
+                <div>
+                    <h1 className="title">Univariate Linear Regression</h1>
+                    <p className="lead">
+                        Experiment with the values below to generate a dataset.
+                    </p>
+                    <div className="paramInput">
+                        <div>
+                            <div>
+                                <label htmlFor="trueCoeff">
+                                    True Coefficient:{" "}
+                                </label>
+                                <input
+                                    name="trueCoeff"
+                                    value={this.state.trueCoeff}
+                                    type="number"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="trueBias">True Bias: </label>
+                                <input
+                                    name="trueBias"
+                                    value={this.state.trueBias}
+                                    type="number"
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="noiseFac">Noise factor: </label>
+                                <div>
+                                    <input
+                                        min="0"
+                                        max="1.0"
+                                        step="0.01"
+                                        value={this.state.noiseFac}
+                                        name="noiseFac"
+                                        type="range"
+                                        onChange={this.handleChange}
+                                    />
+                                    <label>
+                                        {this.state.noiseFac.toFixed(2)}
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label htmlFor="numPoints">
+                                    Number of data points:{" "}
+                                </label>
+                                <div>
+                                    <input
+                                        min="3"
+                                        max="50"
+                                        step="1"
+                                        value={this.state.numPoints}
+                                        name="numPoints"
+                                        type="range"
+                                        onChange={this.handleChange}
+                                    />
+                                    <label>{this.state.numPoints}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="dataset-plot">
+                        <Plot
+                            data={[
+                                {
+                                    x: this.state.train_x,
+                                    y: this.state.train_y,
+                                    type: "scatter",
+                                    mode: "markers",
+                                    marker: { color: "red" },
+                                },
+                            ]}
+                            layout={{
+                                responsive: true,
+                                title: "Scatterplot of data points",
+                            }}
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
+                    <p>
+                        Given a set of <MathJax inline>{"\\(m\\)"}</MathJax>{" "}
+                        training examples{" "}
+                        <MathJax inline>
+                            {"\\(\\left(x^{(i)}, y^{(i)}\\right)\\)"}
+                        </MathJax>{" "}
+                        for all{" "}
+                        <MathJax inline>{"\\(i\\in[1,\\ldots,m]\\)"}</MathJax>,
+                        a linear regression model is a supervised learning
+                        regression model which expresses{" "}
+                        <MathJax inline>
+                            {"\\(f(x^{(i)})=\\hat{y}^{(i)}\\)"}
+                        </MathJax>{" "}
+                        as a linear function of{" "}
+                        <MathJax inline>{"\\(x^{(i)}\\)"}</MathJax> given
+                        parameters <MathJax inline>{"\\(w\\)"}</MathJax> and{" "}
+                        <MathJax inline>{"\\(b\\)"}</MathJax> as follows:
+                    </p>
+                    <p>
+                        <MathJax>
+                            {"\\[\\hat{y}^{(i)}=w\\cdot x^{(i)}+b\\]"}
+                        </MathJax>
+                        The model is a supervised learning model because the
+                        training set contains the "<em>right</em>" or expected
+                        output value for the target variable for every{" "}
+                        <MathJax inline>{"\\(x^{(i)}\\)"}</MathJax>, and a
+                        regression model because the model outputs a continuous
+                        value. Linear regression with one variable is known as a{" "}
+                        <em>univariate</em> linear regression, i.e,{" "}
+                        <MathJax inline>
+                            {"\\(x^{(i)}\\in\\mathbb{R}\\)"}
+                        </MathJax>{" "}
+                        while <em>multivariate</em> linear regression is one
+                        wherein{" "}
+                        <MathJax inline>
+                            {"\\(x^{(i)}\\in\\mathbb{R}^{n}\\)"}
+                        </MathJax>{" "}
+                        for <MathJax inline>{"\\(n>1\\)"}</MathJax> features.
+                    </p>
+                    <h2>Cost Function</h2>
+                    <p>
+                        The goal of the linear regression model is to find
+                        optimal parameters <MathJax inline>{"\\(w\\)"}</MathJax>{" "}
+                        and <MathJax inline>{"\\(b\\)"}</MathJax> such that for
+                        every training example{" "}
+                        <MathJax inline>
+                            {"\\(\\left(x^{(i)}, y^{(i)}\\right)\\)"}
+                        </MathJax>{" "}
+                        for{" "}
+                        <MathJax inline>{"\\(i\\in[1,\\ldots,m]\\)"}</MathJax>
+                    </p>
+                    <p>
+                        <MathJax>{"\\[f(x^{(i)})\\approx y^{(i)}\\]"}</MathJax>
+                    </p>
+                    <p>
+                        Therefore, it helps to provide a precise measure of how{" "}
+                        <em>far off</em> the predicted outputs are from the
+                        expected output. This can be formalized as a cost
+                        function <MathJax inline>{"\\(J\\)"}</MathJax>. A useful
+                        cost function for linear regression is the{" "}
+                        <em>mean squared error</em>,
+                    </p>
+                    <p>
+                        <MathJax>
+                            {
+                                "\\[J(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)} - y^{(i)}\\right)^2\\]"
+                            }
+                        </MathJax>
+                    </p>
+                    <p>
+                        One of the benefits of the{" "}
+                        <MathJax inline>{"\\(\\frac{1}{m}\\)"}</MathJax> is that
+                        without it, as <MathJax inline>{"\\(m\\)"}</MathJax>{" "}
+                        gets larger, the value of the cost function gets larger
+                        as well. Therefore it helps to build a cost function
+                        that does not change significantly just because the size
+                        of the dataset increases. The{" "}
+                        <MathJax inline>{"\\(2\\)"}</MathJax> in{" "}
+                        <MathJax inline>{"\\(2m\\)"}</MathJax> simplifies the
+                        calculation of the gradient later on given that the
+                        minimum of <MathJax inline>{"\\(f(x)\\)"}</MathJax> is
+                        the same as the minimum of{" "}
+                        <MathJax inline>{"\\(\\frac{1}{2}f(x)\\)"}</MathJax>.
+                        Given the cost function, the goal is to find optimal
+                        parameters <MathJax inline>{"\\(w^*\\)"}</MathJax> and{" "}
+                        <MathJax inline>{"\\(b^*\\)"}</MathJax> which minimize{" "}
+                        <MathJax inline>{"\\(J(w,b)\\)"}</MathJax>.
+                    </p>
+                    <br />
+                    <p className="lead">
+                        Take a look at the contour plot of the loss function
+                        below. Observe that the plot looks somewhat convex, with
+                        the deepest point being wherever the true coefficient
+                        and bias was set above. This is precisely the optimal
+                        point to minimize the mean squared error cost function.
+                    </p>
+                    <div className="dataset-plot">
+                        <Plot
+                            data={[
+                                {
+                                    opacity: 0.8,
+                                    color: "rgb(300,100,200)",
+                                    x: this.state.loss_x,
+                                    y: this.state.loss_y,
+                                    z: this.state.loss_z,
+                                    type: "contour",
+                                },
+                            ]}
+                            layout={{
+                                height: 600,
+                                responsive: true,
+                                title: "Contour plot of the loss function",
+                            }}
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
+                    <h2>Gradient Descent</h2>
+                    <p>
+                        Gradient descent is an iterative algorithm that allows
+                        for a linear regression model &mdash; and many other
+                        more complex deep learning models &mdash; to arrive at a
+                        minimum of any continuous and differentiable function.
+                    </p>
+                    <p>
+                        The idea is that given{" "}
+                        <MathJax inline>{"\\(w\\)"}</MathJax> and{" "}
+                        <MathJax inline>{"\\(b\\)"}</MathJax> which are
+                        initialized in any manner, the algorithm will
+                        continuously update these parameters in the steepest
+                        direction (negative of the gradient) towards a minimum
+                        of the cost function. This iteration is repeated until
+                        convergence.
+                    </p>
+                    <p>
+                        Note that since the mean squared error cost function is{" "}
+                        <em>convex</em>, any local minimum is also the global
+                        minimum. This is not necessarily true for other cost
+                        functions, leading to multiple local minima depending on
+                        the initial starting point.
+                    </p>
+                    <p>
+                        The parameters <MathJax inline>{"\\(w\\)"}</MathJax> and{" "}
+                        <MathJax inline>{"\\(b\\)"}</MathJax> on the{" "}
+                        <MathJax inline>{"\\(k\\)"}</MathJax>-th iteration are
+                        continuously updated (simultaneously) as follows,
+                        <MathJax>
+                            {
+                                "\\[\\begin{align*}w^{[k+1]}&\\leftarrow w^{[k]}-\\alpha\\frac{\\partial J(w^{[k]},b^{[k]})}{\\partial w^{[k]}}\\\\b^{[k+1]}&\\leftarrow b{[k]}-\\alpha\\frac{\\partial J(w^{[k]},b^{[k]})}{\\partial b^{[k]}}\\end{align*}\\]"
+                            }
+                        </MathJax>
+                        where <MathJax inline>{"\\(\\alpha\\)"}</MathJax>{" "}
+                        describes the <em>learning rate</em>, essentially a
+                        hyperparameter.
+                    </p>
+                    <h2>Calculating the Gradient</h2>
+                    <p>
+                        Given the cost function{" "}
+                        <MathJax inline>{"\\(J(w,b)\\)"}</MathJax> which has
+                        been previously defined as,
+                    </p>
+                    <p>
+                        <MathJax>
+                            {
+                                "\\[J(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\]"
+                            }
+                        </MathJax>
+                    </p>
+                    <p>
+                        The gradient of the cost function w.r.t the weights{" "}
+                        <MathJax inline>{"\\(w\\)"}</MathJax> is
+                    </p>
+                    <p>
+                        <MathJax>
+                            {
+                                "\\[\\nabla_{w}J(w,b)=\\frac{\\partial J(w,b)}{\\partial w}\\]"
+                            }
+                        </MathJax>
+                    </p>
+                    <p>
+                        The components of this gradient (where{" "}
+                        <MathJax inline>{"\\(w_j=w\\)"}</MathJax> in the
+                        univariate case and{" "}
+                        <MathJax inline>{"\\(j\\in[1,\\ldots,n]\\)"}</MathJax>{" "}
+                        for the multivariate case) can be calculated as,
+                    </p>
+                    <p>
+                        <MathJax>
+                            {`\\[\\begin{align*}\\frac{\\partial J(w,b)}{\\partial w}
+                                    &=\\frac{\\partial}{\\partial w}\\left[\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\right]\\\\[1em]
+                                    &=\\frac{1}{2m}\\cdot\\sum_{i=1}^{m}\\left[\\frac{\\partial}{\\partial w}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\right]\\\\[1em]
+                                    &=\\frac{1}{2m}\\cdot\\sum_{i=1}^{m}\\left[2\\left(\\hat{y}^{(i)}-y^{(i)}\\right)\\cdot\\frac{\\partial}{\\partial w_j}\\left(wx^{(i)}+b-y^{(i)}\\right)\\right]\\\\[1em]
+                                    &=\\frac{1}{2m}\\sum_{i=1}^{m}\\left[2\\left(\\hat{y}^{(i)}-y^{(i)}\\right)\\cdot x^{(i)}\\right]\\\\[1em]
+                                    &=\\frac{1}{m}\\sum_{i=1}^{m}(\\hat{y}^{(i)}-y^{(i)})\\cdot x^{(i)}
+                                    \\end{align*}\\]`}
+                        </MathJax>
+                    </p>
+
+                    <p>
+                        Likewise,{" "}
+                        <MathJax inline>
+                            {"\\(\\frac{\\partial J(w,b)}{b}\\)"}
+                        </MathJax>{" "}
+                        can be calculated as
+                        <MathJax>
+                            {
+                                "\\[\\frac{\\partial J(w,b)}{\\partial b}=\\frac{1}{m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)\\]"
+                            }
+                        </MathJax>
+                    </p>
+                </div>
             </div>
         );
     }
