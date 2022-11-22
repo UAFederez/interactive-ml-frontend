@@ -1,15 +1,22 @@
 .nav-container {
     overflow: hidden;
-    position: fixed;
+    position: sticky;
     top: 0;
-    width: 100%;
-    z-index: 2;
+    z-index: 1;
 
-    display: flex;
-    flex-direction: row;
+    
     color: #0D0A0B;
     background-color: #f7f7f7;
     padding: 1em 0em;
+    
+    width: 100%;
+}
+
+.nav-container > div {
+    max-width: 70em;
+    margin: 0px auto;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
 }
 
