@@ -1,22 +1,21 @@
 import "./App.css";
-import Home from "./routes/Home";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LinearRegression from "./routes/model-pages/LinearRegression";
-import Navigation from "./components/Navigation";
+import LinearRegressionUni from "./routes/articles/LinearRegressionUni/LinearRegressionUni";
+import Navbar from "./components/Navbar/Navbar";
 import { MathJaxContext } from "better-react-mathjax";
+import LandingPage from "./routes/LandingPage/LandingPage";
 
 function App() {
     return (
         <MathJaxContext>
             <BrowserRouter>
-                <Navigation />
+                <Navbar />
                 <Routes>
                     <Route path="/">
-                        <Route index element={<Home />} />
+                        <Route index element={<LandingPage />} />
                         <Route
                             path="linear-regression"
-                            element={<LinearRegression />}
+                            element={<LinearRegressionUni />}
                         />
                     </Route>
                 </Routes>

@@ -1,42 +1,52 @@
-.App {
-  text-align: center;
+:root {
+  --ff-sans-primary: 'Montserrat', sans-serif;
+  --ff-sans-secondary: 'IBM Plex Sans', sans-serif;
+  --ff-serif-primary: 'Lora', serif;
+
+  /* Color scheme: https://coolors.co/ffffff-f5f5f5-0b0a07-43aa8b-f46036 */
+  --color-neutral-900: hsl(0, 0%, 100%);
+  --color-neutral-800: hsl(0, 0%, 90%);
+  --color-neutral-700: hsl(0, 0%, 80%);
+  --color-neutral-600: hsl(0, 0%, 75%);
+  --color-neutral-400: hsl(0, 0%, 50%);
+  --color-neutral-200: hsl(0, 0%, 25%);
+  --color-neutral-100: hsl(0, 0%, 5%);
+
+  --color-primary-400: #40A083;
+  --color-primary-200: #3D7068;
+
+  --fs-200: 0.5rem;
+  --fs-300: 0.75rem;
+  --fs-400: 1rem;
+  --fs-500: 1.25rem;
+  --fs-600: 1.5rem;
+  --fs-700: 1.75rem;
+  --fs-800: 2rem;
+  --fs-xl: 3rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.fs-300 { font-size: var(--fs-300); }
+.fs-400 { font-size: var(--fs-400); }
+.fs-500 { font-size: var(--fs-500); }
+.fs-600 { font-size: var(--fs-600); }
+.fs-700 { font-size: var(--fs-700); }
+.fs-800 { font-size: var(--fs-800); }
+.fs-xl  { font-size: var(--fs-xl ); }
+
+.fs-xl { font-size: var(--fs-xl); }
+
+.ff-sans-primary   { font-family: var(--ff-sans-primary);   }
+.ff-sans-secondary { font-family: var(--ff-sans-secondary); }
+
+.letter-space-sm { letter-spacing: 0.1ch; }
+.letter-space-md { letter-spacing: 0.3ch; }
+.text-center {text-align: center;}
+
+.container {
+  width: min(90%, 50rem);
+  margin-inline: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.content {
-  box-sizing: border-box;
+h1, h2 {
+  font-weight: bold;
 }

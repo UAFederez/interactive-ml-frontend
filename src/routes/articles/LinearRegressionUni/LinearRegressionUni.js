@@ -1,11 +1,11 @@
 import { MathJax } from "better-react-mathjax";
 import React from "react";
 import Plot from "react-plotly.js";
-import StaticLatexSection from "../../components/StaticLatexSection";
-import "../../styles/article-style.css";
-import "../../styles/linear-regression-uni-styles.css";
+import StaticLatexSection from "../../../components/StaticLatexSection";
+import "../Article-styles.css";
+import "./LinearRegressionUni-styles.css";
 
-export default class LinearRegression extends React.Component {
+export default class LinearRegressionUni extends React.Component {
     constructor(props) {
         super(props);
 
