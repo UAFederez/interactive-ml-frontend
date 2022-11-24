@@ -1,89 +1,51 @@
-.paramInput > div {
+.paramInput {
     margin: 0.5em auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
 }
 
-.paramInput > div > div {
-    flex: 1 1 45%;
-    display: flex;
-    flex-direction: column;
-    padding-right: 0.5em;
-}
-
-.paramInput > div > div > label {
-    flex: 1;
-}
-
-.paramInput input {
-    flex: 1;
-    font-size: 1em;
-}
-
-.paramInput > div > div > div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.paramInput > div > div > div > label {
-    padding-left: .5em;
-    font-family: sans-serif;
-}
-
-.modelParam-input {
+.input-group {
     display: flex;
     flex-direction: column;
 }
 
-.modelParam-input .input-fields {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding-right: 0.5em;
+.input-group label {
+    font-family: var(--ff-sans-primary);
+    font-weight: 100;
+    font-size: var(--fs-400);
+    margin-bottom: 0.25rem;
 }
 
-.modelParam-input .input-fields div {
-    flex: 1 1 45%;
-    display: flex;
-    flex-direction: column;
-    padding-right: 0.5em;
+@media (max-width: 600px)
+{
+    .paramInput {
+        grid-template-columns: 1fr;
+    }
 }
 
-.modelParam-input .input-fields input {
-    font-size: 1em;
-}
 
-.modelParam-input .button-field {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 1em 0em;
-}
-
-.button {
-    font-size: 1em;
-    font-family: 'IBM Plex Sans', sans-serif;
-    padding: 0.5em 1em;
-    border-radius: 12px;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0px 2px 5px 1px rgba(29, 29, 29, 0.25);;
-}
-
-.button:hover, .button:focus-visible {
-    opacity: 0.75;
-    box-shadow: 0px 5px 10px 1px rgba(29, 29, 29, 0.25);;
-}
-
-.modelParam-input .input-fields div label {
-    padding-right: 0.1em;
+.input-group > * {
     flex: 1;
 }
 
-.modelParam-input .input-fields div input {
+.input-group input[type="text"],
+.input-group input[type="number"] {
+    font-size: var(--fs-400);
+    padding: 0.5rem 0.7rem;
+}
+
+.input-range-group {
+    display: flex;
+}
+
+.input-range-group input {
     flex: 1;
+}
+
+.input-range-group label {
+    flex: 0 0 4ch;
+    text-align: left;
 }
 
 .dataset-plot {
@@ -93,4 +55,33 @@
 
 .dataset-plot div {
     width: 100% !important;
+}
+
+.modelParam-input {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.modelParam-input .input-fields {
+    display: grid;
+    gap: 1rem;
+    grid-auto-flow: row;  
+    grid-template-columns: 1fr 1fr; 
+}
+
+
+@media (max-width: 600px)
+{
+    .modelParam-input .input-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.button-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }

@@ -1,0 +1,128 @@
+main {
+    
+}
+
+.article {
+    width: min(90%, 60rem); 
+    display: flex;
+    gap: 3rem;
+    flex-direction: row;
+}
+
+.bookmarks {
+    padding-top: 1rem;
+    position: sticky;
+    top: 0;
+}
+
+@media (max-width: 800px)
+{
+    .bookmarks {
+        display: none;
+    }
+
+    .article {
+        gap: 0;
+        flex-direction: column;
+    }
+}
+
+.bookmark-title {
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.bookmarks ul li a {
+    border-left: 3px solid var(--color-neutral-800);
+    display: block;
+    text-decoration: none;
+    padding: .5rem 0rem;
+    padding-left: 0.75rem;
+    padding-right: 1rem;
+    color: var(--color-neutral-400);
+}
+
+.bookmarks ul li a:hover {
+    background-color: var(--color-primary-400);
+    color: var(--color-neutral-900);
+    border-left: 3px solid var(--color-primary-200);
+}
+
+.bookmarks p {
+    font-size: var(--fs-300);
+    white-space: nowrap;
+    line-height: 1.25rem !important;
+}
+
+
+.article-header {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+.article p {
+    font-family: var(--ff-serif-primary);
+    line-height: 1.75rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--ff-sans-primary);
+    font-weight: bold;
+    line-height: 1.5rem;
+}
+
+.article-header h1 {
+    font-size: var(--fs-900);
+    color: var(--color-primary-400);
+}
+
+.article > .title {
+    font-size: var(--fs-900);
+}
+
+.article h2 {
+    font-size: var(--fs-700);
+    margin-bottom: 1rem;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+
+.content {
+    overflow: hidden;
+}
+
+.display-latex {
+    overflow-x: auto;
+}
+
+.content p {
+    line-height: 2rem;
+    margin-bottom: 1rem;
+}
+
+.back {
+    font-family: var(--ff-sans-primary);
+    font-weight: light;
+    text-decoration: none;
+    line-height: 1.25rem;
+    margin-bottom: .75rem;
+    display: inline-block;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.0);
+    color: var(--color-neutral-500);
+}
+
+.back:hover {
+    border-bottom: 2px solid var(--color-neutral-500);
+}
+
+.lead {
+    font-family: var(--ff-sans-primary);
+    display: block;
+    line-height: 2rem;
+    margin-bottom: 1rem;
+    
+    font-weight: 200;
+    color: var(--color-neutral-200);
+}
