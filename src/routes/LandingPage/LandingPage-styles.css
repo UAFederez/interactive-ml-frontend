@@ -14,11 +14,29 @@
 .hero p {
     margin-top: 1rem;
     font-weight: 200;
+    line-height: 1.5rem;
     letter-spacing: 0.15ch;
+}
+
+.hero h1 {
+    line-height: 3rem;
 }
 
 .hero-container {
     margin-bottom: 2rem;
+}
+
+.article-item-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.article-item-link .title {
+    color: var(--color-primary-400);
+}
+
+.article-item-link:hover .title {
+    text-decoration: underline;
 }
 
 .main-content {

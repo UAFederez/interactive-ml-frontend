@@ -79,19 +79,23 @@ const LandingPage = () => {
                     <ul className="articles-list">
                         {supervisedLearningArticles.map((article) => (
                             <li className="article-item" key={article.title}>
-                                <div>
-                                    <div className="card-header"></div>
-                                    <div className="card-content">
-                                        <Link to={article.link}>
+                                <Link
+                                    to={article.link}
+                                    className="article-item-link"
+                                >
+                                    <div>
+                                        <div className="card-header"></div>
+                                        <div className="card-content">
                                             <h2 className="title">
                                                 {article.title}
                                             </h2>
-                                        </Link>
-                                        <p className="description">
-                                            {article.description}
-                                        </p>
+
+                                            <p className="description">
+                                                {article.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </li>
                         ))}
                     </ul>
@@ -101,19 +105,23 @@ const LandingPage = () => {
                     <ul className="articles-list">
                         {unsupervisedLearningArticles.map((article) => (
                             <li className="article-item" key={article.title}>
-                                <div>
-                                    <div className="card-header"></div>
-                                    <div className="card-content">
-                                        <Link to={article.link}>
+                                <Link
+                                    to={article.link}
+                                    className="article-item-link"
+                                >
+                                    <div>
+                                        <div className="card-header"></div>
+                                        <div className="card-content">
                                             <h2 className="title">
                                                 {article.title}
                                             </h2>
-                                        </Link>
-                                        <p className="description">
-                                            {article.description}
-                                        </p>
+
+                                            <p className="description">
+                                                {article.description}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </li>
                         ))}
                     </ul>
