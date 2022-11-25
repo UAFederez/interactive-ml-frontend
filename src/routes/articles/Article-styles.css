@@ -63,6 +63,7 @@ main {
 .article p {
     font-family: var(--ff-serif-primary);
     line-height: 1.75rem;
+    color: var(--color-neutral-300);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -71,18 +72,17 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.5rem;
 }
 
-.article-header h1 {
+.article-header > .title {
     font-size: var(--fs-900);
     color: var(--color-primary-400);
-}
-
-.article > .title {
-    font-size: var(--fs-900);
+    line-height: 3rem;
 }
 
 .article h2 {
     font-size: var(--fs-700);
     margin-bottom: 1rem;
+    line-height: 2rem;
+    color: var(--color-neutral-200);
 }
 
 .section {
@@ -91,6 +91,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .content {
     overflow: hidden;
+    padding-inline: 0.2ch;
 }
 
 .display-latex {

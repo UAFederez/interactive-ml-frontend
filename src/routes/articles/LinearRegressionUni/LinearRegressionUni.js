@@ -12,8 +12,8 @@ export default class LinearRegressionUni extends React.Component {
         super(props);
 
         this.state = {
-            trueCoeff: 1,
-            trueBias: 0,
+            trueCoeff: "1",
+            trueBias: "0",
             noiseFac: 0.25,
             numPoints: 25,
             train_x: [],
@@ -107,6 +107,12 @@ export default class LinearRegressionUni extends React.Component {
     };
 
     regenerateDataset = () => {
+        const trueCoeff =
+            this.state.trueCoeff.length === 0
+                ? 0
+                : Number(this.state.trueCoeff);
+        const trueBias =
+            this.state.trueBias.length === 0 ? 0 : Number(this.state.trueBias);
         // Since the points range from [-1, 1], then the distance is 2
         const step = 2.0 / this.state.numPoints;
         let train_x = [];
@@ -115,9 +121,7 @@ export default class LinearRegressionUni extends React.Component {
             const x_val = -1.0 + (i + 1) * step;
             const noise = this.state.noiseFac * this.boxMullerTransform();
             train_x.push(x_val);
-            train_y.push(
-                this.state.trueCoeff * x_val + this.state.trueBias + noise
-            );
+            train_y.push(trueCoeff * x_val + trueBias + noise);
         }
 
         this.setState(
@@ -132,7 +136,24 @@ export default class LinearRegressionUni extends React.Component {
         );
     };
 
+    /**
+     * Reacting to input changes for a type='number' input field should
+     * ideally allow for arbitrarily typing of negative symbols, empty etc.
+     * given that the dataset is updated live. This is why there are separate
+     * handlers for onChange.
+     */
     handleChange = (event) => {
+        this.setState(
+            {
+                [event.target.name]: event.target.value,
+            },
+            () => {
+                this.regenerateDataset();
+            }
+        );
+    };
+
+    handleRangeChange = (event) => {
         this.setState(
             {
                 [event.target.name]: Number(event.target.value),
@@ -190,7 +211,7 @@ export default class LinearRegressionUni extends React.Component {
                 x: this.state.trainResult.param_hist.b,
                 y: this.state.trainResult.param_hist.w,
                 type: "scatter",
-                name: "",
+                name: "Trajectory",
                 mode: "lines+markers",
                 marker: { color: "white" },
                 line: { dash: "dash" },
@@ -246,6 +267,7 @@ export default class LinearRegressionUni extends React.Component {
                                     </label>
                                     <input
                                         name="trueCoeff"
+                                        step="0.01"
                                         value={this.state.trueCoeff}
                                         type="number"
                                         onChange={this.handleChange}
@@ -257,6 +279,7 @@ export default class LinearRegressionUni extends React.Component {
                                     </label>
                                     <input
                                         name="trueBias"
+                                        step="0.01"
                                         value={this.state.trueBias}
                                         type="number"
                                         onChange={this.handleChange}
@@ -274,7 +297,7 @@ export default class LinearRegressionUni extends React.Component {
                                             value={this.state.noiseFac}
                                             name="noiseFac"
                                             type="range"
-                                            onChange={this.handleChange}
+                                            onChange={this.handleRangeChange}
                                         />
                                         <label>
                                             {this.state.noiseFac.toFixed(2)}
@@ -293,7 +316,7 @@ export default class LinearRegressionUni extends React.Component {
                                             value={this.state.numPoints}
                                             name="numPoints"
                                             type="range"
-                                            onChange={this.handleChange}
+                                            onChange={this.handleRangeChange}
                                         />
                                         <label>{this.state.numPoints}</label>
                                     </div>
@@ -315,6 +338,12 @@ export default class LinearRegressionUni extends React.Component {
                                     title: "Scatterplot of the generated dataset",
                                     autosize: true,
                                     height: 600,
+                                    margin: {
+                                        l: 40,
+                                        r: 40,
+                                        t: 60,
+                                        b: 60,
+                                    },
                                 }}
                                 useResizeHandler
                                 config={{
@@ -376,14 +405,9 @@ export default class LinearRegressionUni extends React.Component {
                                     for <MathJax inline>{"\\(n>1\\)"}</MathJax>{" "}
                                     features.
                                 </p>
-                            </StaticLatexSection>
-                        </div>
-                        <div id="cost-function" className="section">
-                            <StaticLatexSection>
-                                <h2>Cost Function</h2>
                                 <p>
-                                    The goal of the linear regression model is
-                                    to find optimal parameters{" "}
+                                    The goal of the linear regression model then
+                                    is to find optimal parameters{" "}
                                     <MathJax inline>{"\\(w\\)"}</MathJax> and{" "}
                                     <MathJax inline>{"\\(b\\)"}</MathJax> such
                                     that for every training example{" "}
@@ -397,17 +421,20 @@ export default class LinearRegressionUni extends React.Component {
                                         {"\\(i\\in[1,\\ldots,m]\\)"}
                                     </MathJax>
                                 </p>
-
                                 <MathJax className={"display-latex"}>
                                     {"\\[f(x^{(i)})\\approx y^{(i)}\\]"}
                                 </MathJax>
+                            </StaticLatexSection>
+                        </div>
+                        <div id="cost-function" className="section">
+                            <StaticLatexSection>
+                                <h2>Cost Function</h2>
 
                                 <p>
-                                    Therefore, it helps to provide a precise
-                                    measure of how <em>far off</em> the
-                                    predicted outputs are from the expected
-                                    output. This can be formalized as a cost
-                                    function{" "}
+                                    It helps to provide a precise measure of how{" "}
+                                    <em>far off</em> the predicted outputs are
+                                    from the expected output. This can be
+                                    formalized as a cost function{" "}
                                     <MathJax inline>{"\\(J\\)"}</MathJax>. A
                                     useful cost function for linear regression
                                     is the <em>mean squared error</em>,
@@ -468,6 +495,9 @@ export default class LinearRegressionUni extends React.Component {
                                             y: this.state.loss_y,
                                             z: this.state.loss_z,
                                             type: "contour",
+                                            colorbar: {
+                                                orientation: "h",
+                                            },
                                         },
                                     ]}
                                     layout={{
@@ -480,6 +510,12 @@ export default class LinearRegressionUni extends React.Component {
                                             range: [-10, 10],
                                         },
                                         height: 600,
+                                        margin: {
+                                            l: 30,
+                                            r: 30,
+                                            t: 60,
+                                            b: 60,
+                                        },
                                         autosize: true,
                                         title: "Contour plot of the loss function",
                                     }}
@@ -699,8 +735,21 @@ export default class LinearRegressionUni extends React.Component {
                                                     },
                                                     range: [-10, 10],
                                                 },
+                                                margin: {
+                                                    l: 40,
+                                                    r: 40,
+                                                    t: 60,
+                                                    b: 60,
+                                                },
+                                                legend: {
+                                                    x: 0.05,
+                                                    xanchor: "left",
+                                                    y: 0.99,
+                                                    bgcolor:
+                                                        "rgba(255, 255, 255, 0.5)",
+                                                },
                                                 height: 600,
-                                                title: "Contour plot of the loss function with parameter trajectory",
+                                                title: "Contour plot of the loss function",
                                             }}
                                             useResizeHandler
                                             config={{
@@ -723,6 +772,19 @@ export default class LinearRegressionUni extends React.Component {
                                                 autosize: true,
                                                 height: 600,
                                                 title: "Scatterplot of data points",
+                                                margin: {
+                                                    l: 40,
+                                                    r: 40,
+                                                    t: 60,
+                                                    b: 60,
+                                                },
+                                                legend: {
+                                                    x: 0,
+                                                    xanchor: "left",
+                                                    y: 1,
+                                                    bgcolor:
+                                                        "rgba(255, 255, 255, 0.5)",
+                                                },
                                             }}
                                             useResizeHandler
                                             config={{
@@ -763,6 +825,19 @@ export default class LinearRegressionUni extends React.Component {
                                                 autosize: true,
                                                 title: "Loss curve",
                                                 height: 600,
+                                                margin: {
+                                                    l: 40,
+                                                    r: 40,
+                                                    t: 60,
+                                                    b: 60,
+                                                },
+                                                legend: {
+                                                    x: 0,
+                                                    xanchor: "left",
+                                                    y: 1,
+                                                    bgcolor:
+                                                        "rgba(255, 255, 255, 0.5)",
+                                                },
                                             }}
                                             useResizeHandler
                                             config={{

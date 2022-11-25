@@ -50,7 +50,13 @@
 
 .dataset-plot {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+}
+
+.dataset-plot > * {
+    flex: 1;
 }
 
 .dataset-plot div {
