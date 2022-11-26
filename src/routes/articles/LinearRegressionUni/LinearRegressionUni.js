@@ -4,43 +4,32 @@ import Plot from "react-plotly.js";
 import { Link } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
 import StaticLatexSection from "../../../components/StaticLatexSection";
+import {
+    eval_mean_squared_err,
+    generate_linear_dataset,
+} from "../../../utils/linear_regression_utils";
+import { generate_range } from "../../../utils/math";
 import "../Article-styles.css";
 import "./LinearRegressionUni-styles.css";
 
 export default class LinearRegressionUni extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            trueCoeff: "1",
-            trueBias: "0",
-            noiseFac: 0.25,
-            numPoints: 25,
-            train_x: [],
-            train_y: [],
-            loss_x: [],
-            loss_y: [],
-            loss_z: [],
-            numEpochs: React.createRef(),
-            learningRate: React.createRef(),
-            trainResult: {},
-        };
-    }
-
-    componentDidMount() {
-        this.regenerateDataset();
-    }
-
-    // Obtain a random variable that is approximately
-    // distributed by a Gaussian (mu = 0, var = 1)
-    // From: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
-    boxMullerTransform = () => {
-        let u = 1 - Math.random();
-        let v = Math.random();
-        return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    state = {
+        trueCoeff: "1",
+        trueBias: "0",
+        noiseFac: 0.25,
+        numPoints: 25,
+        dataset: { train_x: [], train_y: [] },
+        loss_landscape: { test_points: [], loss_values: [] },
+        numEpochs: React.createRef(),
+        learningRate: React.createRef(),
+        trainResult: {},
     };
 
-    handleModelTrainSubmit = async (event) => {
+    componentDidMount() {
+        this.regenerate_dataset();
+    }
+
+    handle_model_submit = async (event) => {
         event.preventDefault();
         const result = await fetch(
             "http://localhost:5000/api/linear-regression-uni",
@@ -51,8 +40,8 @@ export default class LinearRegressionUni extends React.Component {
                 },
                 body: JSON.stringify({
                     method: "gradient_descent",
-                    train_x: this.state.train_x,
-                    train_y: this.state.train_y,
+                    train_x: this.state.dataset.train_x,
+                    train_y: this.state.dataset.train_y,
                     epochs: Number(this.state.numEpochs.current.value),
                     learning_rate: Number(
                         this.state.learningRate.current.value
@@ -63,75 +52,60 @@ export default class LinearRegressionUni extends React.Component {
         );
         const response = await result.json();
         this.setState({
+            ...this.state,
             trainResult: response,
         });
-        this.computeLoss();
+        this.compute_loss_landscape();
     };
 
-    computeLoss = () => {
+    compute_loss_landscape = () => {
         const size = 25;
-        let x = new Array(size);
-        let z = new Array(size);
+        const test_points = generate_range(-10, 10, size);
+        const loss_values = test_points.map((x_i) =>
+            test_points.map((x_j) =>
+                eval_mean_squared_err([x_i], x_j, this.state.dataset)
+            )
+        );
 
-        const from = -10.0;
-        const to = 10.0;
-        const step = (to - from) / size;
-        for (let i = 0; i < size; i++) {
-            x[i] = from + (i + 1.0) * step;
-            z[i] = new Array(size);
-        }
-
-        for (let i = 0; i < size; i++) {
-            for (let j = 0; j < size; j++) {
-                let loss_ij = 0.0;
-                for (let n = 0; n < this.state.numPoints; n++) {
-                    const y_pred = x[i] * this.state.train_x[n] + x[j];
-                    const y_true = this.state.train_y[n];
-                    loss_ij += (y_pred - y_true) ** 2 / this.state.numPoints;
-                }
-                z[i][j] = loss_ij;
-            }
-        }
-
-        if (this.state.loss_x.length === 0) {
-            this.setState({
-                loss_x: x,
-                loss_y: x,
-                loss_z: z,
-            });
-        } else {
-            this.setState({
-                loss_z: z,
-            });
-        }
+        this.setState({
+            ...this.state,
+            loss_landscape: {
+                test_points: test_points,
+                loss_values: loss_values,
+            },
+        });
     };
 
-    regenerateDataset = () => {
+    regenerate_dataset = () => {
         const trueCoeff =
             this.state.trueCoeff.length === 0
                 ? 0
                 : Number(this.state.trueCoeff);
         const trueBias =
             this.state.trueBias.length === 0 ? 0 : Number(this.state.trueBias);
-        // Since the points range from [-1, 1], then the distance is 2
-        const step = 2.0 / this.state.numPoints;
-        let train_x = [];
-        let train_y = [];
-        for (let i = 0; i < this.state.numPoints; i++) {
-            const x_val = -1.0 + (i + 1) * step;
-            const noise = this.state.noiseFac * this.boxMullerTransform();
-            train_x.push(x_val);
-            train_y.push(trueCoeff * x_val + trueBias + noise);
-        }
+
+        const [train_x, train_y] = generate_linear_dataset(
+            [trueCoeff],
+            trueBias,
+            -1.0,
+            1.0,
+            this.state.numPoints,
+            this.state.noiseFac
+        );
 
         this.setState(
             {
+                ...this.state,
                 train_x: train_x,
                 train_y: train_y,
+                dataset: {
+                    train_x: train_x,
+                    train_y: train_y,
+                },
                 trainResult: {},
             },
             () => {
-                this.computeLoss();
+                this.compute_loss_landscape();
             }
         );
     };
@@ -142,24 +116,26 @@ export default class LinearRegressionUni extends React.Component {
      * given that the dataset is updated live. This is why there are separate
      * handlers for onChange.
      */
-    handleChange = (event) => {
+    handle_input_change = (event) => {
         this.setState(
             {
+                ...this.state,
                 [event.target.name]: event.target.value,
             },
             () => {
-                this.regenerateDataset();
+                this.regenerate_dataset();
             }
         );
     };
 
-    handleRangeChange = (event) => {
+    handle_input_range_change = (event) => {
         this.setState(
             {
+                ...this.state,
                 [event.target.name]: Number(event.target.value),
             },
             () => {
-                this.regenerateDataset();
+                this.regenerate_dataset();
             }
         );
     };
@@ -169,9 +145,9 @@ export default class LinearRegressionUni extends React.Component {
             {
                 opacity: 0.8,
                 color: "rgb(300,100,200)",
-                x: this.state.loss_x,
-                y: this.state.loss_y,
-                z: this.state.loss_z,
+                x: this.state.loss_landscape.test_points,
+                y: this.state.loss_landscape.test_points,
+                z: this.state.loss_landscape.loss_values,
                 type: "contour",
                 colorbar: {
                     orientation: "h",
@@ -181,8 +157,8 @@ export default class LinearRegressionUni extends React.Component {
 
         let modelOutputLineData = [
             {
-                x: this.state.train_x,
-                y: this.state.train_y,
+                x: this.state.dataset.train_x,
+                y: this.state.dataset.train_y,
                 type: "scatter",
                 mode: "markers",
                 name: "data",
@@ -195,12 +171,18 @@ export default class LinearRegressionUni extends React.Component {
             const b = this.state.trainResult.bias;
             modelOutputLineData.push({
                 x: [
-                    this.state.train_x[0],
-                    this.state.train_x[this.state.train_x.length - 1],
+                    this.state.dataset.train_x[0],
+                    this.state.dataset.train_x[
+                        this.state.dataset.train_x.length - 1
+                    ],
                 ],
                 y: [
-                    w * this.state.train_x[0] + b,
-                    w * this.state.train_x[this.state.train_x.length - 1] + b,
+                    w * this.state.dataset.train_x[0] + b,
+                    w *
+                        this.state.dataset.train_x[
+                            this.state.dataset.train_x.length - 1
+                        ] +
+                        b,
                 ],
                 type: "lines",
                 name: "fitted line",
@@ -270,7 +252,7 @@ export default class LinearRegressionUni extends React.Component {
                                         step="0.01"
                                         value={this.state.trueCoeff}
                                         type="number"
-                                        onChange={this.handleChange}
+                                        onChange={this.handle_input_change}
                                     />
                                 </div>
                                 <div className="input-group">
@@ -282,7 +264,7 @@ export default class LinearRegressionUni extends React.Component {
                                         step="0.01"
                                         value={this.state.trueBias}
                                         type="number"
-                                        onChange={this.handleChange}
+                                        onChange={this.handle_input_change}
                                     />
                                 </div>
                                 <div className="input-group">
@@ -297,7 +279,9 @@ export default class LinearRegressionUni extends React.Component {
                                             value={this.state.noiseFac}
                                             name="noiseFac"
                                             type="range"
-                                            onChange={this.handleRangeChange}
+                                            onChange={
+                                                this.handle_input_range_change
+                                            }
                                         />
                                         <label>
                                             {this.state.noiseFac.toFixed(2)}
@@ -316,7 +300,9 @@ export default class LinearRegressionUni extends React.Component {
                                             value={this.state.numPoints}
                                             name="numPoints"
                                             type="range"
-                                            onChange={this.handleRangeChange}
+                                            onChange={
+                                                this.handle_input_range_change
+                                            }
                                         />
                                         <label>{this.state.numPoints}</label>
                                     </div>
@@ -327,8 +313,8 @@ export default class LinearRegressionUni extends React.Component {
                             <Plot
                                 data={[
                                     {
-                                        x: this.state.train_x,
-                                        y: this.state.train_y,
+                                        x: this.state.dataset.train_x,
+                                        y: this.state.dataset.train_y,
                                         type: "scatter",
                                         mode: "markers",
                                         marker: { color: "red" },
@@ -491,9 +477,12 @@ export default class LinearRegressionUni extends React.Component {
                                         {
                                             opacity: 0.8,
                                             color: "rgb(300,100,200)",
-                                            x: this.state.loss_x,
-                                            y: this.state.loss_y,
-                                            z: this.state.loss_z,
+                                            x: this.state.loss_landscape
+                                                .test_points,
+                                            y: this.state.loss_landscape
+                                                .test_points,
+                                            z: this.state.loss_landscape
+                                                .loss_values,
                                             type: "contour",
                                             colorbar: {
                                                 orientation: "h",
@@ -650,7 +639,7 @@ export default class LinearRegressionUni extends React.Component {
                                 on the 'Train Model' button to start training
                                 the linear model.
                             </span>
-                            <form onSubmit={this.handleModelTrainSubmit}>
+                            <form onSubmit={this.handle_model_submit}>
                                 <div>
                                     <div className="modelParam-input">
                                         <div className="input-fields">
@@ -805,8 +794,8 @@ export default class LinearRegressionUni extends React.Component {
                                         <Plot
                                             data={[
                                                 {
-                                                    y: this.state.trainResult
-                                                        .loss_hist,
+                                                    y: this.state.dataset
+                                                        .trainResult.loss_hist,
                                                     type: "scatter",
                                                     mode: "lines+markers",
                                                     name: "data",
