@@ -21,7 +21,7 @@ const LandingPage = () => {
             title: "Logistic Regression",
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam vero",
-            link: "/",
+            link: "/logistic-regression",
         },
         {
             title: "Neural networks for binary classification",
