@@ -4,6 +4,7 @@ import LinearRegressionUni from "./routes/articles/LinearRegressionUni/LinearReg
 import Navbar from "./components/Navbar/Navbar";
 import { MathJaxContext } from "better-react-mathjax";
 import LandingPage from "./routes/LandingPage/LandingPage";
+import LinearRegressionMul from "./routes/articles/LinearRegressionMul/LinearRegressionMul";
 
 function App() {
     return (
@@ -16,6 +17,10 @@ function App() {
                         <Route
                             path="linear-regression"
                             element={<LinearRegressionUni />}
+                        />
+                        <Route
+                            path="linear-regression-mul"
+                            element={<LinearRegressionMul />}
                         />
                     </Route>
                 </Routes>

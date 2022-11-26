@@ -15,7 +15,7 @@ const LandingPage = () => {
             title: "Multivariate Linear Regression",
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam vero",
-            link: "/",
+            link: "/linear-regression-mul",
         },
         {
             title: "Logistic Regression",
