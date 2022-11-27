@@ -51,11 +51,15 @@ export default class LinearRegressionUni extends React.Component {
             }
         );
         const response = await result.json();
-        this.setState({
-            ...this.state,
-            trainResult: response,
-        });
-        this.compute_loss_landscape();
+        this.setState(
+            {
+                ...this.state,
+                trainResult: response,
+            },
+            () => {
+                this.compute_loss_landscape();
+            }
+        );
     };
 
     compute_loss_landscape = () => {
@@ -794,8 +798,8 @@ export default class LinearRegressionUni extends React.Component {
                                         <Plot
                                             data={[
                                                 {
-                                                    y: this.state.dataset
-                                                        .trainResult.loss_hist,
+                                                    y: this.state.trainResult
+                                                        .loss_hist,
                                                     type: "scatter",
                                                     mode: "lines+markers",
                                                     name: "data",
