@@ -27,7 +27,7 @@ const LandingPage = () => {
             title: "Neural networks for binary classification",
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam vero",
-            link: "/",
+            link: "/neural-network-bin",
         },
         {
             title: "Neural networks for multi-class classification",

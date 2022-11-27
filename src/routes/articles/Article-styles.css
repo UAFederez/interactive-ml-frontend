@@ -85,6 +85,12 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-neutral-200);
 }
 
+.article h3 {
+    font-size: var(--fs-500);
+    margin-top: 1rem;
+    margin-bottom: .8rem;
+}
+
 .section {
     margin-bottom: 2rem;
 }
@@ -101,7 +107,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .content p {
     line-height: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
 }
 
 .back {

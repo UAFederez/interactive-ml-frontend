@@ -6,6 +6,7 @@ import { MathJaxContext } from "better-react-mathjax";
 import LandingPage from "./routes/LandingPage/LandingPage";
 import LinearRegressionMul from "./routes/articles/LinearRegressionMul/LinearRegressionMul";
 import LogisticRegression from "./routes/articles/LogisticRegression/LogisticRegression";
+import NeuralNetworkBinary from "./routes/articles/NeuralNetworkBin/NeuralNetworkBin";
 
 function App() {
     return (
@@ -26,6 +27,10 @@ function App() {
                         <Route
                             path="logistic-regression"
                             element={<LogisticRegression />}
+                        />
+                        <Route
+                            path="neural-network-bin"
+                            element={<NeuralNetworkBinary />}
                         />
                     </Route>
                 </Routes>
