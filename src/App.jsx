@@ -8,6 +8,7 @@ import LinearRegressionMul from "./routes/articles/LinearRegressionMul/LinearReg
 import LogisticRegression from "./routes/articles/LogisticRegression/LogisticRegression";
 import NeuralNetworkBinary from "./routes/articles/NeuralNetworkBin/NeuralNetworkBin";
 import NeuralNetworkMul from "./routes/articles/NeuralNetworkMul/NeuralNetworkMul";
+import Footer from "./components/Footer/Footer";
 
 function App() {
     return (
@@ -39,6 +40,7 @@ function App() {
                         />
                     </Route>
                 </Routes>
+                <Footer />
             </BrowserRouter>
         </MathJaxContext>
     );

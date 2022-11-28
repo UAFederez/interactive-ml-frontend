@@ -1,0 +1,29 @@
+footer {
+    background: var(--color-primary-200);
+}
+
+footer > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: var(--space-900);
+}
+
+footer div > p:nth-of-type(1) {
+    font-weight: bold;
+}
+
+footer p,
+footer a {
+    font-family: var(--ff-head-primary);
+    color: #f2f2f2;
+    font-size: var(--fs-200);
+    font-weight: 200;
+    line-height: 1.2rem;
+}
+
+@media (min-width: 60rem) {
+    footer > div {
+        flex-direction: row;
+    }
+}

@@ -1,7 +1,7 @@
-import "./Footer-styles.css";
+import styles from "./Footer.module.css";
 
 const Footer = () => (
-    <footer>
+    <footer className={styles.footer}>
         <div className="container">
             <div>
                 <p>Built by</p>
