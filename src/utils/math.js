@@ -9,12 +9,12 @@
  * @param {Number} num  Number of points to sample
  * @returns {Number[]}  `num` evenly spaced numbers within [from, to]
  */
-export const generate_range = (from, to, num) => {
+export const generate_range = (from, to, num, func = (e) => e) => {
     if (to <= from) {
         return [];
     }
     const step = (to - from) / num;
-    let result = new Array(num).fill(0).map((e, idx) => idx);
+    let result = new Array(num).fill(0).map((e, idx) => func(idx));
     return result.map((elem) => from + elem * step);
 };
 
@@ -59,4 +59,16 @@ export const box_muller_transform = () => {
     let u = 1 - Math.random();
     let v = Math.random();
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+};
+
+/**
+ *
+ * @param {Number} left Left endpoint of the range left < right
+ * @param {Number} right Right endpoint of the range
+ * @returns {Number} A random number that is uniformly distributed in [left, right]
+ */
+export const random_uniform = (left, right) => {
+    return right >= left
+        ? left + Math.random() * (right - left)
+        : right + Math.random() * (left - right);
 };

@@ -33,7 +33,7 @@ const LandingPage = () => {
             title: "Neural networks for multi-class classification",
             description:
                 "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam vero",
-            link: "/",
+            link: "/neural-network-mul",
         },
         {
             title: "Decision trees for classification",

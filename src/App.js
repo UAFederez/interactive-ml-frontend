@@ -7,6 +7,7 @@ import LandingPage from "./routes/LandingPage/LandingPage";
 import LinearRegressionMul from "./routes/articles/LinearRegressionMul/LinearRegressionMul";
 import LogisticRegression from "./routes/articles/LogisticRegression/LogisticRegression";
 import NeuralNetworkBinary from "./routes/articles/NeuralNetworkBin/NeuralNetworkBin";
+import NeuralNetworkMul from "./routes/articles/NeuralNetworkMul/NeuralNetworkMul";
 
 function App() {
     return (
@@ -31,6 +32,10 @@ function App() {
                         <Route
                             path="neural-network-bin"
                             element={<NeuralNetworkBinary />}
+                        />
+                        <Route
+                            path="neural-network-mul"
+                            element={<NeuralNetworkMul />}
                         />
                     </Route>
                 </Routes>
