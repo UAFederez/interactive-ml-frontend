@@ -20,6 +20,8 @@
 
 .hero h1 {
     line-height: 3rem;
+    font-family: var(--ff-sans-primary);
+    font-weight: bold;
 }
 
 .hero-container {
