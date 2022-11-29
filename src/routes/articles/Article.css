@@ -1,0 +1,146 @@
+.articleHeader {
+    padding-block: var(--space-900);
+}
+
+.articleHeader .title {
+    font-family: var(--ff-head-primary);
+    font-weight: 800;
+    font-size: var(--fs-xl);
+    color: var(--color-primary-400);
+}
+
+.back {
+    display: block;
+    font-family: var(--ff-head-secondary);
+    font-size: var(--fs-200);
+    color: var(--color-secondary-400);
+    text-decoration: none;
+    margin-bottom: var(--space-300);
+}
+
+.article {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+}
+
+.bookmarksContainer {
+    display: none;
+}
+
+.content {
+    font-family: var(--ff-body-primary);
+    overflow-x: hidden;
+}
+
+.bookmarkTitle {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.bookmarksContainer ul li a {
+    display: block;
+    text-decoration: none;
+    color: var(--color-neutral-400);
+    padding-block: 0.75rem;
+    padding-inline: 1rem;
+    border-left: 2px solid var(--color-neutral-600);
+}
+
+.bookmarksContainer ul li a:hover {
+    color: var(--color-secondary-400);
+    background-color: rgb(115 29 216 / 0.05);
+    border-left: 2px solid var(--color-secondary-400);
+}
+
+.section {
+    margin-block: var(--space-500);
+}
+
+.section:nth-of-type(1) {
+    margin-top: 0rem;
+}
+
+.section h2 {
+    font-size: var(--fs-600);
+    margin-bottom: var(--space-400);
+    font-weight: bold;
+    font-family: var(--ff-head-secondary);
+    color: var(--color-primary-400);
+}
+
+.section p {
+    line-height: var(--space-700);
+    margin-bottom: var(--space-400);
+    color: var(--color-neutral-200);
+}
+
+.lead {
+    display: block;
+    font-weight: 300;
+    padding: var(--space-400);
+    font-family: var(--ff-head-primary);
+    border-left: 2px solid var(--color-primary-400);
+    margin-bottom: var(--space-500);
+    line-height: 1.5rem;
+    color: var(--color-primary-400);
+    background-color: rgb(8 84 84 / 0.05);
+}
+
+.displayLatex {
+    overflow-x: auto;
+}
+
+.datasetPlot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.datasetPlot > * {
+    flex: 1;
+}
+
+.datasetPlot div {
+    width: 100%;
+}
+
+@media (min-width: 60rem) {
+    .article {
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.25rem;
+    }
+
+    .bookmarksContainer {
+        display: block;
+        position: sticky;
+        top: calc(var(--nav-height) + 1rem);
+        align-self: start;
+        grid-column: 10 / span 3;
+
+        font-family: var(--ff-body-primary);
+        font-weight: 100;
+        font-size: var(--fs-200);
+    }
+    .content {
+        align-self: start;
+        grid-column: 1 / span 8;
+    }
+}
+
+.button {
+    padding: 0.5rem 1.25rem;
+    text-transform: uppercase;
+    font-family: var(--ff-head-primary);
+    font-size: var(--fs-400);
+    border: 1px solid var(--color-secondary-400);
+    color: var(--color-secondary-400);
+    cursor: pointer;
+    background: #fff;
+}
+
+.button:hover {
+    background: var(--color-secondary-400);
+    color: #f2f2f2;
+}

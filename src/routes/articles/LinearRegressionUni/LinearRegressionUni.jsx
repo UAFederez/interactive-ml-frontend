@@ -9,8 +9,8 @@ import {
     generate_linear_dataset,
 } from "../../../utils/linear_regression_utils";
 import { generate_range } from "../../../utils/math";
-import "../Article-styles.css";
-import "./LinearRegressionUni-styles.css";
+import "../Article.css";
+import styles from "./LinearRegressionUni.module.css";
 
 export default class LinearRegressionUni extends React.Component {
     state = {
@@ -156,6 +156,7 @@ export default class LinearRegressionUni extends React.Component {
                 colorbar: {
                     orientation: "h",
                 },
+                colorscale: "Portland",
             },
         ];
 
@@ -166,7 +167,9 @@ export default class LinearRegressionUni extends React.Component {
                 type: "scatter",
                 mode: "markers",
                 name: "data",
-                marker: { color: "red" },
+                marker: {
+                    color: "#085454",
+                },
             },
         ];
 
@@ -211,29 +214,25 @@ export default class LinearRegressionUni extends React.Component {
                 marker: { color: "#00ff00", size: 10, line: { width: 1 } },
             });
             modelOutputContourData.push({
-                x: [
-                    this.state.trainResult.param_hist.b[
-                        this.state.trainResult.param_hist.b.length - 1
-                    ],
-                ],
-                y: [
-                    this.state.trainResult.param_hist.w[
-                        this.state.trainResult.param_hist.w.length - 1
-                    ],
-                ],
+                x: [Number(this.state.trueBias)],
+                y: [Number(this.state.trueCoeff)],
                 type: "scatter",
-                name: "End",
-                mode: "lines+markers",
-                marker: { color: "#ff0000", size: 10, line: { width: 1 } },
+                mode: "markers",
+                name: "True parameters",
+                marker: {
+                    color: "#f22f2f",
+                    size: 10,
+                    line: { width: 1 },
+                },
             });
         }
 
         return (
             <main>
-                <div className="container article-header">
+                <div className="container articleHeader">
                     <div>
-                        <Link to="/">
-                            <p className="back">&#8249; Back</p>
+                        <Link to="/" className="back">
+                            <p>&#8249; Back</p>
                         </Link>
                     </div>
                     <h1 className="title">Univariate Linear Regression</h1>
@@ -243,11 +242,12 @@ export default class LinearRegressionUni extends React.Component {
                         <div className="section" id="dataset">
                             <h2>Dataset</h2>
                             <span className="lead">
-                                Experiment with the values below to generate a
-                                dataset.
+                                We'll see how linear regression works but first
+                                we need a dataset. Experiment with the values
+                                below to generate a dataset.
                             </span>
-                            <div className="paramInput">
-                                <div className="input-group">
+                            <div className={styles.paramInput}>
+                                <div className={styles.inputGroup}>
                                     <label htmlFor="trueCoeff">
                                         True Coefficient:{" "}
                                     </label>
@@ -259,7 +259,7 @@ export default class LinearRegressionUni extends React.Component {
                                         onChange={this.handle_input_change}
                                     />
                                 </div>
-                                <div className="input-group">
+                                <div className={styles.inputGroup}>
                                     <label htmlFor="trueBias">
                                         True Intercept:{" "}
                                     </label>
@@ -271,11 +271,11 @@ export default class LinearRegressionUni extends React.Component {
                                         onChange={this.handle_input_change}
                                     />
                                 </div>
-                                <div className="input-group">
+                                <div className={styles.inputGroup}>
                                     <label htmlFor="noiseFac">
                                         Noise factor:{" "}
                                     </label>
-                                    <div className="input-range-group">
+                                    <div className={styles.inputRangeGroup}>
                                         <input
                                             min="0"
                                             max="1.0"
@@ -292,11 +292,11 @@ export default class LinearRegressionUni extends React.Component {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="input-group">
+                                <div className={styles.inputGroup}>
                                     <label htmlFor="numPoints">
                                         Number of data points:{" "}
                                     </label>
-                                    <div className="input-range-group">
+                                    <div className={styles.inputRangeGroup}>
                                         <input
                                             min="3"
                                             max="50"
@@ -313,7 +313,7 @@ export default class LinearRegressionUni extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="dataset-plot">
+                        <div className="datasetPlot">
                             <Plot
                                 data={[
                                     {
@@ -321,7 +321,9 @@ export default class LinearRegressionUni extends React.Component {
                                         y: this.state.dataset.train_y,
                                         type: "scatter",
                                         mode: "markers",
-                                        marker: { color: "red" },
+                                        marker: {
+                                            color: "#085454",
+                                        },
                                     },
                                 ]}
                                 layout={{
@@ -370,7 +372,7 @@ export default class LinearRegressionUni extends React.Component {
                                     follows:
                                 </p>
                                 <p>
-                                    <MathJax className={"display-latex"}>
+                                    <MathJax className="displayLatex">
                                         {
                                             "\\[\\hat{y}^{(i)}=w\\cdot x^{(i)}+b\\]"
                                         }
@@ -411,7 +413,7 @@ export default class LinearRegressionUni extends React.Component {
                                         {"\\(i\\in[1,\\ldots,m]\\)"}
                                     </MathJax>
                                 </p>
-                                <MathJax className={"display-latex"}>
+                                <MathJax className="displayLatex">
                                     {"\\[f(x^{(i)})\\approx y^{(i)}\\]"}
                                 </MathJax>
                             </StaticLatexSection>
@@ -430,7 +432,7 @@ export default class LinearRegressionUni extends React.Component {
                                     is the <em>mean squared error</em>,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {
                                         "\\[J(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)} - y^{(i)}\\right)^2\\]"
                                     }
@@ -475,7 +477,7 @@ export default class LinearRegressionUni extends React.Component {
                                     squared error cost function.
                                 </p>
                             </StaticLatexSection>
-                            <div className="dataset-plot">
+                            <div className="datasetPlot">
                                 <Plot
                                     data={[
                                         {
@@ -490,6 +492,19 @@ export default class LinearRegressionUni extends React.Component {
                                             type: "contour",
                                             colorbar: {
                                                 orientation: "h",
+                                            },
+                                            colorscale: "Portland",
+                                        },
+                                        {
+                                            x: [Number(this.state.trueBias)],
+                                            y: [Number(this.state.trueCoeff)],
+                                            type: "scatter",
+                                            mode: "markers",
+                                            name: "True parameters",
+                                            marker: {
+                                                color: "#f2f2f2",
+                                                size: 10,
+                                                line: { width: 1 },
                                             },
                                         },
                                     ]}
@@ -508,6 +523,13 @@ export default class LinearRegressionUni extends React.Component {
                                             r: 30,
                                             t: 60,
                                             b: 60,
+                                        },
+                                        showlegend: true,
+                                        legend: {
+                                            x: 0,
+                                            xanchor: "left",
+                                            y: 0,
+                                            bgcolor: "rgba(255, 255, 255, 0.5)",
                                         },
                                         autosize: true,
                                         title: "Contour plot of the loss function",
@@ -558,7 +580,7 @@ export default class LinearRegressionUni extends React.Component {
                                     (simultaneously) as follows,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {
                                         "\\[\\begin{align*}w^{[k+1]}&\\leftarrow w^{[k]}-\\alpha\\frac{\\partial J(w^{[k]},b^{[k]})}{\\partial w^{[k]}}\\\\b^{[k+1]}&\\leftarrow b{[k]}-\\alpha\\frac{\\partial J(w^{[k]},b^{[k]})}{\\partial b^{[k]}}\\end{align*}\\]"
                                     }
@@ -581,7 +603,7 @@ export default class LinearRegressionUni extends React.Component {
                                     which has been previously defined as,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {
                                         "\\[J(w,b)=\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\]"
                                     }
@@ -593,7 +615,7 @@ export default class LinearRegressionUni extends React.Component {
                                     <MathJax inline>{"\\(w\\)"}</MathJax> is
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {
                                         "\\[\\nabla_{w}J(w,b)=\\frac{\\partial J(w,b)}{\\partial w}\\]"
                                     }
@@ -610,7 +632,7 @@ export default class LinearRegressionUni extends React.Component {
                                     as,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[\\begin{align*}\\frac{\\partial J(w,b)}{\\partial w}
                                     &=\\frac{\\partial}{\\partial w}\\left[\\frac{1}{2m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\right]\\\\[1em]
                                     &=\\frac{1}{2m}\\cdot\\sum_{i=1}^{m}\\left[\\frac{\\partial}{\\partial w}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)^2\\right]\\\\[1em]
@@ -628,7 +650,7 @@ export default class LinearRegressionUni extends React.Component {
                                     can be calculated as
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {
                                         "\\[\\frac{\\partial J(w,b)}{\\partial b}=\\frac{1}{m}\\sum_{i=1}^{m}\\left(\\hat{y}^{(i)}-y^{(i)}\\right)\\]"
                                     }
@@ -645,9 +667,9 @@ export default class LinearRegressionUni extends React.Component {
                             </span>
                             <form onSubmit={this.handle_model_submit}>
                                 <div>
-                                    <div className="modelParam-input">
-                                        <div className="input-fields">
-                                            <div className="input-group">
+                                    <div className={styles.modelParamInput}>
+                                        <div className={styles.inputFields}>
+                                            <div className={styles.inputGroup}>
                                                 <label htmlFor="learningRate">
                                                     Learning rate:{" "}
                                                 </label>
@@ -657,18 +679,19 @@ export default class LinearRegressionUni extends React.Component {
                                                         this.state.learningRate
                                                     }
                                                     type="number"
+                                                    required
                                                     step="0.01"
                                                     min="0.01"
                                                     defaultValue={0.1}
-                                                    required
                                                 />
                                             </div>
-                                            <div className="input-group">
+                                            <div className={styles.inputGroup}>
                                                 <label htmlFor="numEpochs">
                                                     Number of iterations:{" "}
                                                 </label>
                                                 <input
                                                     defaultValue={50}
+                                                    required
                                                     name="numEpochs"
                                                     type="number"
                                                     ref={this.state.numEpochs}
@@ -677,7 +700,7 @@ export default class LinearRegressionUni extends React.Component {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="button-field">
+                                        <div className={styles.buttonField}>
                                             <button
                                                 type="submit"
                                                 className="button"
@@ -712,7 +735,7 @@ export default class LinearRegressionUni extends React.Component {
                                         of the model, even for a convex
                                         function.
                                     </p>
-                                    <div className="dataset-plot">
+                                    <div className="datasetPlot">
                                         <Plot
                                             data={modelOutputContourData}
                                             layout={{
@@ -735,9 +758,9 @@ export default class LinearRegressionUni extends React.Component {
                                                     b: 60,
                                                 },
                                                 legend: {
-                                                    x: 0.05,
+                                                    x: 0,
                                                     xanchor: "left",
-                                                    y: 0.99,
+                                                    y: 0,
                                                     bgcolor:
                                                         "rgba(255, 255, 255, 0.5)",
                                                 },
@@ -756,7 +779,7 @@ export default class LinearRegressionUni extends React.Component {
                                         line as determined through gradient
                                         descent.
                                     </p>
-                                    <div className="dataset-plot">
+                                    <div className="datasetPlot">
                                         <Plot
                                             data={modelOutputLineData}
                                             layout={{
@@ -794,7 +817,7 @@ export default class LinearRegressionUni extends React.Component {
                                         actually progressing towards the optimal
                                         parameters.
                                     </p>
-                                    <div className="dataset-plot">
+                                    <div className="datasetPlot">
                                         <Plot
                                             data={[
                                                 {
@@ -857,7 +880,7 @@ export default class LinearRegressionUni extends React.Component {
                                     </MathJax>
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[\\begin{align*}
                                  \\sum_{i=1}^{m}\\left[(w\\cdot x^{(i)}+b-y^{(i)})\\cdot x^{(i)}\\right]&=0\\\\
                                  \\sum_{i=1}^{m}(w\\cdot x^{(i)}+b-y^{(i)})       &=0\\\\
@@ -869,7 +892,7 @@ export default class LinearRegressionUni extends React.Component {
                                     constants to the right hand side
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[\\begin{alignat*}{3}
                             &(1)\\quad w\\sum_{i=1}^{m}(x^{(i)})^2&&+b\\sum_{i=1}^{m}x^{(i)}&&=\\sum_{i=1}^{m}y^{(i)}x^{(i)}\\\\
                             &(2)\\quad w\\sum_{i=1}^{m}x^{(i)}&&+bm&&=\\sum_{i=1}^{m}y^{(i)}
@@ -882,7 +905,7 @@ export default class LinearRegressionUni extends React.Component {
                                 </h3>
                                 <p>Elimination of the second term,</p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[\\begin{align*}
                                      w\\sum_{i=1}^{m}(x^{(i)})^2+b\\sum_{i=1}^{m}x^{(i)}&=\\sum_{i=1}^{m}y^{(i)}x^{(i)}\\\\
                                      -\\frac{\\sum_{i=1}^{m}x^{(i)}}{m}(w\\sum_{i=1}^{m}x^{(i)}+mb       &=\\sum_{i=1}^{m}y^{(i)})\\\\
@@ -898,7 +921,7 @@ export default class LinearRegressionUni extends React.Component {
                                     <MathJax inline>{"\\(w\\)"}</MathJax>,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[w\\left[\\frac{m\\sum_{i=1}^{m}(x^{(i)})^2-\\left(\\sum_{i=1}^{m}x^{(i)}\\right)^2}{m}\\right]=\\frac{m\\sum_{i=1}^{m}y^{(i)}x^{(i)}-\\sum_{i=1}^{m}y^{(i)}\\sum_{i=1}^{m}x^{(i)}}{m}\\]`}
                                     {`\\[w=\\frac{m\\sum_{i}y^{(i)}x^{(i)}-\\sum_{i}y^{(i)}\\sum_{i}x^{(i)}}{m\\sum_{i}(x^{(i)})^2-\\left(\\sum_{i}x^{(i)}\\right)^2}\\]`}
                                 </MathJax>
@@ -914,14 +937,14 @@ export default class LinearRegressionUni extends React.Component {
                                     (1):
                                 </p>
 
-                                <MathJax className="display-latex">{`\\[w=\\frac{\\sum_{i}y^{(i)}-bm}{\\sum_{i}x^{(i)}}\\]`}</MathJax>
+                                <MathJax className="displayLatex">{`\\[w=\\frac{\\sum_{i}y^{(i)}-bm}{\\sum_{i}x^{(i)}}\\]`}</MathJax>
 
                                 <p>
                                     Solving for{" "}
                                     <MathJax inline>{"\\(b\\)"}</MathJax>,
                                 </p>
 
-                                <MathJax className="display-latex">
+                                <MathJax className="displayLatex">
                                     {`\\[\\begin{align*}
                                 \\left(\\frac{\\sum_{i}y^{(i)}-bm}{\\sum_{i}x^{(i)}}\\right)\\sum_{i}(x^{(i)})^2+b\\sum_{i}x^{(i)}&=\\sum_{i}y^{(i)}x^{(i)}\\\\[1em]
                                 \\frac{\\sum_{i}y^{(i)}\\sum_{i}(x^{(i)})^2-mb\\sum_{i}(x^{(i)})^2+b\\left(\\sum_{i}x^{(i)}\\right)^2}{\\sum_{i}x^{(i)}}&=\\sum_{i}y^{(i)}x^                                   {(i)}\\\\[1em]
@@ -935,9 +958,9 @@ export default class LinearRegressionUni extends React.Component {
                             </StaticLatexSection>
                         </div>
                     </div>
-                    <div className="bookmarks-container">
-                        <div className="bookmarks">
-                            <p className="bookmark-title">In this article</p>
+                    <div className="bookmarksContainer">
+                        <div>
+                            <p className="bookmarkTitle">In this article</p>
                             <ul>
                                 <li>
                                     <a href="#dataset">
@@ -978,7 +1001,6 @@ export default class LinearRegressionUni extends React.Component {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </main>
         );
     }

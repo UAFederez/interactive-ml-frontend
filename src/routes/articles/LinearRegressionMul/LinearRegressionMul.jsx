@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
 import StaticLatexSection from "../../../components/StaticLatexSection";
-import "../Article-styles.css";
+import "../Article.css";
 
 export default class LinearRegressionMul extends React.Component {
     state = {};

@@ -1,0 +1,61 @@
+.paramInput {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-400);
+}
+
+.inputGroup input[type="text"],
+.inputGroup input[type="number"] {
+    font-size: var(--fs-500);
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputGroup label {
+    font-family: var(--ff-head-primary);
+    font-weight: 300;
+    margin-bottom: var(--space-300);
+}
+
+.inputRangeGroup {
+    display: grid;
+    grid-template-columns: 1fr 0.1fr;
+}
+
+.inputRangeGroup label {
+    margin: 0;
+    margin-left: 1ch;
+}
+
+.modelParamInput {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-400);
+    margin-bottom: var(--space-400);
+}
+
+.buttonField {
+    display: flex;
+    justify-content: center;
+}
+
+.inputFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-400);
+}
+
+@media screen and (min-width: 60rem) {
+    .paramInput {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .inputFields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
