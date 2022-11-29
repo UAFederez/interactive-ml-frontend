@@ -14,6 +14,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    background: #fff;
     height: var(--nav-height);
 }
 
@@ -31,6 +33,19 @@
 
 .navVis {
     display: block;
+    z-index: 9999;
+    position: relative;
+    border-block: 1px solid rgba(43, 43, 43, 0.25);
+}
+
+.navVis::after {
+    content: " ";
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    z-index: 0;
+    opacity: 0.25;
+    background-color: #2b2b2b;
 }
 
 .navHidden {
@@ -38,7 +53,6 @@
 }
 
 .navContainer nav {
-    border-top: none;
     background-color: #fff;
 }
 
@@ -54,7 +68,8 @@
     text-decoration: none;
 }
 
-.navContainer ~ div {
+.navContainer ~ div,
+.navContainer ~ main {
     padding-top: var(--nav-height);
 }
 
@@ -81,6 +96,14 @@
 
 .menuBtn {
     margin-right: var(--space-400);
+    border: none;
+    background: rgba(0, 0, 0, 0);
+}
+
+.hamburger {
+    height: 100%;
+    color: #f2f2f2;
+    aspect-ratio: 1;
 }
 
 @media (min-width: 40rem) {

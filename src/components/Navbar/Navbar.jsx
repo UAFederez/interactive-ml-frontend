@@ -18,9 +18,47 @@ const Navbar = () => {
                 </span>
                 <button
                     className={styles.menuBtn}
-                    onClick={() => setVisible(!isVisible)}
+                    onClick={() => {
+                        setVisible((vis) => {
+                            if (!vis) {
+                                document.body.classList.add("no-scroll-y");
+                            } else {
+                                document.body.classList.remove("no-scroll-y");
+                            }
+                            return !vis;
+                        });
+                    }}
                 >
-                    MENU
+                    <svg
+                        className={styles.hamburger}
+                        viewBox="0 0 100 100"
+                        width="32"
+                    >
+                        <rect
+                            className=""
+                            width="75"
+                            height="8"
+                            x="15"
+                            y="25"
+                            fill="#2f2f2f"
+                        ></rect>
+                        <rect
+                            className=""
+                            width="75"
+                            height="8"
+                            x="15"
+                            y="50"
+                            fill="#2f2f2f"
+                        ></rect>
+                        <rect
+                            className=""
+                            width="75"
+                            height="8"
+                            x="15"
+                            y="75"
+                            fill="#2f2f2f"
+                        ></rect>
+                    </svg>
                 </button>
             </div>
             <nav className={styles.navDesktop}>
