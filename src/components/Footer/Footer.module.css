@@ -3,9 +3,9 @@ footer {
 }
 
 footer > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
     gap: var(--space-900);
 }
 
@@ -24,6 +24,6 @@ footer a {
 
 @media (min-width: 60rem) {
     footer > div {
-        flex-direction: row;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
