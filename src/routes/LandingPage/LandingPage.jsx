@@ -8,37 +8,37 @@ const LandingPage = () => {
         {
             title: "Univariate Linear Regression",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "One of the most fundamental machine learning problems is fitting a straight line to data to observe a potential linear relationship. Univariate linear regression shows how this is done for datasets with one independent variable.",
             link: "/linear-regression",
         },
         {
             title: "Multivariate Linear Regression",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "A natural extension of linear regression is to introduce more independent variables. Multivariate logistic regression shows how this is done through both iterative and analytical methods, namely gradient descent and the normal equations.",
             link: "/linear-regression-mul",
         },
         {
             title: "Logistic Regression",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "Yes or no. True or false. 1 or 0. Often times the target variable is a binary label. Logistic regression provides a special linear model that is able to provide a useful method for binary classification.",
             link: "/logistic-regression",
         },
         {
             title: "Neural networks for binary classification",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "A relatively recent but important development in the modern age of machine learning. Neural networks aim to provide a way of constructing a model that has the ability to learn complex non-linear relationships. See how it applies to binary classification.",
             link: "/neural-network-bin",
         },
         {
             title: "Neural networks for multi-class classification",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "In some cases, the task requires to distinguish between classes from discrete categories. Animal breeds, faces, objects, you name it.See how the capabilities of neural networks lend themselves well to also be useful in this context.",
             link: "/neural-network-mul",
         },
         {
             title: "Decision trees for classification",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "If it looks like a duck, swims like a duck, and quacks like a duck, then the model predicts an 80.24% chance that it is a duck. Decision trees provide a model that classifies records through a series of decisions about each of its most 'defining' aspects.",
             link: "/",
         },
     ];
@@ -47,7 +47,7 @@ const LandingPage = () => {
         {
             title: "K-means Clustering",
             description:
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar mi non justo laoreet volutpat. Sed varius iaculis massa in venenatis. Nunc arcu lacus, placerat quis ex ac, dapibus",
+                "Birds of a feather flock together. K-means clustering is a model that aims to provide answers to such questions without a definitive or known classification of data to instead find discernable groupings or clusters within the data.",
             link: "/",
         },
     ];
@@ -61,14 +61,12 @@ const LandingPage = () => {
                             Machine learning in action.
                         </span>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Etiam pulvinar mi non justo laoreet volutpat.
-                            Sed varius iaculis massa in venenatis. Nunc arcu
-                            lacus, placerat quis ex ac, dapibus tempor nulla.
-                            Vestibulum sodales purus non nulla posuere, at
-                            fermentum magna tincidunt. Morbi eros arcu, dapibus
-                            eget ultricies ac, pellentesque vel leo. Donec sed
-                            gravida enim.
+                            Experiment with various machine learning models and
+                            find out how they work under the hood in this series
+                            of interactive articles explaining both the math as
+                            well as the implementation. Play around with the
+                            parameters of AI models and see how machines can be
+                            programmed to <em>learn</em>.
                         </p>
                     </div>
                 </div>

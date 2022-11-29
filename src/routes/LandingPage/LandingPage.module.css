@@ -26,6 +26,7 @@
     line-height: var(--space-600);
     font-family: var(--ff-body-primary);
     font-weight: 300;
+    line-height: 2;
 }
 
 .heroImage {
