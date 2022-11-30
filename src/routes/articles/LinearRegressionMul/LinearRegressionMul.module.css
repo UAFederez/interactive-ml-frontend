@@ -1,0 +1,23 @@
+.modelParamInput {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-400);
+    margin-bottom: var(--space-400);
+}
+
+.modelParamFields {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-400);
+}
+
+.buttonField {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (min-width: 60rem) {
+    .modelParamFields {
+        grid-template-columns: 1fr 1fr;
+    }
+}
