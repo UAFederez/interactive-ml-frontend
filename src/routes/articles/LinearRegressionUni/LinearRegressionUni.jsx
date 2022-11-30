@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
 import StaticLatexSection from "../../../components/StaticLatexSection";
 import {
-    eval_mean_squared_err,
-    generate_linear_dataset,
+    evalMeanSquaredError,
+    generateLinearDataset,
 } from "../../../utils/linear_regression_utils";
-import { generate_range } from "../../../utils/math";
+import { generateRange } from "../../../utils/math";
 import "../Article.css";
 import styles from "./LinearRegressionUni.module.css";
 
@@ -64,10 +64,10 @@ export default class LinearRegressionUni extends React.Component {
 
     compute_loss_landscape = () => {
         const size = 25;
-        const test_points = generate_range(-10, 10, size);
+        const test_points = generateRange(-10, 10, size);
         const loss_values = test_points.map((x_i) =>
             test_points.map((x_j) =>
-                eval_mean_squared_err([x_i], x_j, this.state.dataset)
+                evalMeanSquaredError([x_i], x_j, this.state.dataset)
             )
         );
 
@@ -88,7 +88,7 @@ export default class LinearRegressionUni extends React.Component {
         const trueBias =
             this.state.trueBias.length === 0 ? 0 : Number(this.state.trueBias);
 
-        const [train_x, train_y] = generate_linear_dataset(
+        const [train_x, train_y] = generateLinearDataset(
             [trueCoeff],
             trueBias,
             -1.0,
@@ -247,7 +247,7 @@ export default class LinearRegressionUni extends React.Component {
                                 below to generate a dataset.
                             </span>
                             <div className={styles.paramInput}>
-                                <div className={styles.inputGroup}>
+                                <div className="inputGroup">
                                     <label htmlFor="trueCoeff">
                                         True Coefficient:{" "}
                                     </label>
@@ -259,7 +259,7 @@ export default class LinearRegressionUni extends React.Component {
                                         onChange={this.handle_input_change}
                                     />
                                 </div>
-                                <div className={styles.inputGroup}>
+                                <div className="inputGroup">
                                     <label htmlFor="trueBias">
                                         True Intercept:{" "}
                                     </label>
@@ -271,11 +271,11 @@ export default class LinearRegressionUni extends React.Component {
                                         onChange={this.handle_input_change}
                                     />
                                 </div>
-                                <div className={styles.inputGroup}>
+                                <div className="inputGroup">
                                     <label htmlFor="noiseFac">
                                         Noise factor:{" "}
                                     </label>
-                                    <div className={styles.inputRangeGroup}>
+                                    <div className="inputRangeGroup">
                                         <input
                                             min="0"
                                             max="1.0"
@@ -292,11 +292,11 @@ export default class LinearRegressionUni extends React.Component {
                                         </label>
                                     </div>
                                 </div>
-                                <div className={styles.inputGroup}>
+                                <div className="inputGroup">
                                     <label htmlFor="numPoints">
                                         Number of data points:{" "}
                                     </label>
-                                    <div className={styles.inputRangeGroup}>
+                                    <div className="inputRangeGroup">
                                         <input
                                             min="3"
                                             max="50"
@@ -669,7 +669,7 @@ export default class LinearRegressionUni extends React.Component {
                                 <div>
                                     <div className={styles.modelParamInput}>
                                         <div className={styles.inputFields}>
-                                            <div className={styles.inputGroup}>
+                                            <div className="inputGroup">
                                                 <label htmlFor="learningRate">
                                                     Learning rate:{" "}
                                                 </label>
@@ -685,7 +685,7 @@ export default class LinearRegressionUni extends React.Component {
                                                     defaultValue={0.1}
                                                 />
                                             </div>
-                                            <div className={styles.inputGroup}>
+                                            <div className="inputGroup">
                                                 <label htmlFor="numEpochs">
                                                     Number of iterations:{" "}
                                                 </label>

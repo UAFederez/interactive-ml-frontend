@@ -9,7 +9,7 @@
  * @param {Number} num  Number of points to sample
  * @returns {Number[]}  `num` evenly spaced numbers within [from, to]
  */
-export const generate_range = (from, to, num, func = (e) => e) => {
+export const generateRange = (from, to, num, func = (e) => e) => {
     if (to <= from) {
         return [];
     }
@@ -68,7 +68,5 @@ export const box_muller_transform = () => {
  * @returns {Number} A random number that is uniformly distributed in [left, right]
  */
 export const random_uniform = (left, right) => {
-    return right >= left
-        ? left + Math.random() * (right - left)
-        : right + Math.random() * (left - right);
+    return left + Math.random() * (right - left);
 };

@@ -1,7 +1,7 @@
 import {
     box_muller_transform,
     dot_product,
-    generate_range,
+    generateRange,
     set_product,
 } from "./math";
 
@@ -19,7 +19,7 @@ import {
  *          train_x shape: (num ** coefficients.length, coefficients.length)
  *          train_y shape: (num, 1)
  */
-export const generate_linear_dataset = (
+export const generateLinearDataset = (
     coefficients,
     intercept,
     from,
@@ -27,7 +27,7 @@ export const generate_linear_dataset = (
     num,
     noise_fac
 ) => {
-    let x_values = generate_range(from, to, num);
+    let x_values = generateRange(from, to, num);
 
     // Generate all possible points given the x_values
     let x_data = x_values;
@@ -56,7 +56,7 @@ export const generate_linear_dataset = (
     ];
 };
 
-export const eval_mean_squared_err = (coeffs, bias, dataset) => {
+export const evalMeanSquaredError = (coeffs, bias, dataset) => {
     return dataset.train_x.reduce(
         (accum, x_i, idx) =>
             accum +
@@ -77,6 +77,6 @@ export const calc_loss_landscape = (coeffs, biases, dataset) => {
         return;
     }
     return coeffs.map((coeff, idx) => {
-        return eval_mean_squared_err(coeff, biases[idx], dataset);
+        return evalMeanSquaredError(coeff, biases[idx], dataset);
     });
 };
