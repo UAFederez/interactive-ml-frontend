@@ -98,6 +98,16 @@ body {
     font-size: var(--fs-xl);
 }
 
+.ff-head-primary {
+    font-family: var(--ff-head-primary);
+}
+.ff-head-secondary {
+    font-family: var(--ff-head-secondary);
+}
+.ff-body-primary {
+    font-family: var(--ff-body-primary);
+}
+
 .ff-sans-primary {
     font-family: var(--ff-sans-primary);
 }
@@ -113,6 +123,10 @@ body {
 }
 .text-center {
     text-align: center;
+}
+
+.d-block {
+    display: block;
 }
 
 .container {
