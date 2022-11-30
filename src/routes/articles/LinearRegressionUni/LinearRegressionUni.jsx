@@ -32,7 +32,7 @@ export default class LinearRegressionUni extends React.Component {
     handle_model_submit = async (event) => {
         event.preventDefault();
         const result = await fetch(
-            "http://localhost:5000/api/linear-regression-uni",
+            `${import.meta.env.VITE_API_URL}/api/linear-regression-uni`,
             {
                 method: "POST",
                 headers: {

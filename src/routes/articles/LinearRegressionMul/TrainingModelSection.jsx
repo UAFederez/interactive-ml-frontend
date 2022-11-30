@@ -11,7 +11,7 @@ const TrainingModelSection = (props) => {
     const handleModelSubmit = async (event) => {
         event.preventDefault();
         const result = await fetch(
-            "http://localhost:5000/api/linear-regression-mul",
+            `${import.meta.env.VITE_API_URL}/api/linear-regression-mul`,
             {
                 method: "POST",
                 headers: {
