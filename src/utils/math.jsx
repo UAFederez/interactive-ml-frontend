@@ -55,7 +55,7 @@ export const dot_product = (a, b) => {
 // Obtain a random variable that is approximately
 // distributed by a Gaussian (mu = 0, var = 1)
 // From: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
-export const box_muller_transform = () => {
+export const generateRandomBoxMuller = () => {
     let u = 1 - Math.random();
     let v = Math.random();
     return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
@@ -67,6 +67,6 @@ export const box_muller_transform = () => {
  * @param {Number} right Right endpoint of the range
  * @returns {Number} A random number that is uniformly distributed in [left, right]
  */
-export const random_uniform = (left, right) => {
+export const randomUniform = (left, right) => {
     return left + Math.random() * (right - left);
 };
