@@ -8,12 +8,13 @@ export const generateCirclesDataset = (radii, noiseFactor, numPoints) => {
         let yCoords = [];
 
         generateRange(0.0, 2.0 * Math.PI, numPoints, (e) => {
-            xCoords.push(Math.cos(e) * radius);
-            yCoords.push(Math.sin(e) * radius);
+            const dist = radius + generateRandomBoxMuller() * noiseFactor;
+            xCoords.push(Math.cos(e) * dist);
+            yCoords.push(Math.sin(e) * dist);
             return e;
         });
 
-        const label = idx % 2 == 0 ? 1.0 : 0.0;
+        const label = idx % 2;
 
         dataPoints[0] = dataPoints[0].concat(xCoords);
         dataPoints[1] = dataPoints[1].concat(yCoords);
