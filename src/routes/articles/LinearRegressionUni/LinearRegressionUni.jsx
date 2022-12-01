@@ -3,6 +3,7 @@ import React from "react";
 import Plot from "react-plotly.js";
 import { Link } from "react-router-dom";
 import Footer from "../../../components/Footer/Footer";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import StaticLatexSection from "../../../components/StaticLatexSection";
 import {
     evalMeanSquaredError,
@@ -23,6 +24,7 @@ export default class LinearRegressionUni extends React.Component {
         numEpochs: React.createRef(),
         learningRate: React.createRef(),
         trainResult: {},
+        isLoading: false,
     };
 
     componentDidMount() {
@@ -55,6 +57,7 @@ export default class LinearRegressionUni extends React.Component {
             {
                 ...this.state,
                 trainResult: response,
+                isLoading: false,
             },
             () => {
                 this.compute_loss_landscape();
@@ -665,7 +668,20 @@ export default class LinearRegressionUni extends React.Component {
                                 on the 'Train Model' button to start training
                                 the linear model.
                             </span>
-                            <form onSubmit={this.handle_model_submit}>
+                            <form
+                                onSubmit={(event) => {
+                                    this.setState(
+                                        (prevState) => ({
+                                            ...prevState,
+                                            isLoading: true,
+                                            trainResult: {},
+                                        }),
+                                        () => {
+                                            this.handle_model_submit(event);
+                                        }
+                                    );
+                                }}
+                            >
                                 <div>
                                     <div className={styles.modelParamInput}>
                                         <div className={styles.inputFields}>
@@ -862,6 +878,8 @@ export default class LinearRegressionUni extends React.Component {
                                         />
                                     </div>
                                 </div>
+                            ) : this.state.isLoading ? (
+                                <LoadingSpinner />
                             ) : null}
                         </div>
                         <div className="section" id="direct-solution">
