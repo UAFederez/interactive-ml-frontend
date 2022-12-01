@@ -6,6 +6,7 @@
     font-family: var(--ff-head-primary);
     font-weight: 800;
     font-size: var(--fs-xl);
+    max-width: 30ch;
     color: var(--color-primary-400);
 }
 
@@ -63,6 +64,14 @@
 .section h2 {
     font-size: var(--fs-600);
     margin-bottom: var(--space-400);
+    font-weight: bold;
+    font-family: var(--ff-head-secondary);
+    color: var(--color-primary-400);
+}
+
+.section h3 {
+    font-size: var(--fs-500);
+    margin-block: var(--space-400);
     font-weight: bold;
     font-family: var(--ff-head-secondary);
     color: var(--color-primary-400);
