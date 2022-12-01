@@ -1,6 +1,6 @@
 import {
-    box_muller_transform,
     dot_product,
+    generateRandomBoxMuller,
     generateRange,
     set_product,
 } from "./math";
@@ -46,7 +46,7 @@ export const generateLinearDataset = (
         (x) =>
             dot_product(x, coefficients) +
             intercept +
-            noise_fac * box_muller_transform()
+            noise_fac * generateRandomBoxMuller()
     );
 
     // Reshape x_data to (n, ) to work with existing LinearRegression dataset
