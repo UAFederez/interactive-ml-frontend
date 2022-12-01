@@ -1,14 +1,16 @@
 .loaderContainer {
+    margin-block: var(--space-800);
     display: flex;
     justify-content: center;
 }
 
 .loader {
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid var(--color-primary-400); /* Blue */
+    --width: 4rem;
+    border: calc(var(--width) / 4) solid #f3f3f3; /* Light grey */
+    border-top: calc(var(--width) / 4) solid var(--color-primary-400); /* Blue */
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: var(--width);
+    aspect-ratio: 1;
     animation: spin 2s linear infinite;
 }
 
