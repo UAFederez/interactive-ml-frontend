@@ -8,8 +8,10 @@
 
 .heroContent {
     flex: 1;
-    padding: var(--space-400);
-    padding-top: var(--space-700);
+}
+
+.heroContent div {
+    padding: var(--space-500);
 }
 
 .heroContent .headingText {
@@ -31,7 +33,10 @@
 
 .heroImage {
     flex: 1;
-    background-color: #f4f4f4;
+    background: url("/src/assets/undraw_artificial_intelligence_re_enpp.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
     aspect-ratio: 16 / 9;
     width: 100%;
 }

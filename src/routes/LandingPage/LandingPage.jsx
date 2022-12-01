@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
 import styles from "./LandingPage.module.css";
 
 const LandingPage = () => {
@@ -55,7 +54,7 @@ const LandingPage = () => {
     return (
         <div>
             <header className={styles.heroContainer}>
-                <div className={styles.heroContent}>
+                <div className={`${styles.heroContent}`}>
                     <div>
                         <span className={styles.headingText}>
                             Machine learning in action.
