@@ -44,4 +44,4 @@ export const generateBinaryClusters = (
     return [trainFeatures, trainLabels];
 };
 
-export const sigmoid = (z) => 1 / 1 + Math.exp(-z);
+export const sigmoid = (z) => 1 / (1 + Math.exp(-z));

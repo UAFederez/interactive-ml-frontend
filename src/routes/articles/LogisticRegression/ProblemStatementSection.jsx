@@ -26,7 +26,7 @@ export const ProblemStatementSection = () => {
     }, []);
 
     const plotXValues = generateRange(-10, 10, 100);
-    const plotYValues = plotXValues.map((x) => sigmoid(x));
+    const plotYValues = plotXValues.map((x) => sigmoid(weight * x + bias));
 
     return (
         <div>
@@ -156,7 +156,9 @@ export const ProblemStatementSection = () => {
                             mode: "markers",
                             marker: {
                                 colorscale: "Portland",
-                                color: sampleData.x.map((x) => sigmoid(x)),
+                                color: sampleData.x.map((x) =>
+                                    Math.round(sigmoid(weight * x + bias))
+                                ),
                             },
                         },
                     ]}
