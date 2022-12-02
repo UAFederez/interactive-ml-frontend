@@ -7,7 +7,6 @@ const Navbar = () => {
     const links = [
         { text: "Home", to: "/" },
         { text: "About", to: "/" },
-        { text: "Articles", to: "/" },
         { text: "Contact", to: "/" },
     ];
     return (
