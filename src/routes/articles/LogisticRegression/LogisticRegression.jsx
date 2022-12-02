@@ -59,14 +59,14 @@ export default class LogisticRegression extends React.Component {
 
     /**
      * Cluster centroids are randomly selected along the circumference of a unit circle centered
-     * at the origin. For demonstration purposes, the second cluster centroid is generated such
+     * at the origin for demonstration purposes. The second cluster centroid is generated such
      * that it diametrically opposes the first.
      */
     chooseClustersRandomly = () => {
         const firstClusterTheta = Math.random() * Math.PI * 2.0;
         const firstCluster = [
-            Math.cos(firstClusterTheta) * Math.SQRT2,
-            Math.sin(firstClusterTheta) * Math.SQRT2,
+            Math.cos(firstClusterTheta),
+            Math.sin(firstClusterTheta),
         ];
         const secondCluster = [-firstCluster[0], -firstCluster[1]];
 

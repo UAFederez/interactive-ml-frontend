@@ -130,33 +130,96 @@ export const TrainingModelSection = (props) => {
                     </div>
                 </div>
             </form>
+
             {Object.keys(trainResult).length !== 0 ? (
-                <div className="datasetPlot">
-                    <Plot
-                        data={modelOutputScatterPlot}
-                        layout={{
-                            height: 600,
-                            margin: {
-                                l: 30,
-                                r: 30,
-                                t: 60,
-                                b: 60,
-                            },
-                            yaxis: {
-                                range: [-2.5, 2.5],
-                            },
-                            xaxis: {
-                                range: [-2.5, 2.5],
-                            },
-                            autosize: true,
-                            title: "Scatterplot of the dataset",
-                            showlegend: false,
-                        }}
-                        useResizeHandler
-                        config={{
-                            displayModeBar: false,
-                        }}
-                    />
+                <div>
+                    <p>
+                        The scatter plot below shows the dataset with the two
+                        clusters previously set as before, but now also shows
+                        what the model &mdash; through a sequence of iterations
+                        of gradient descent &mdash; has identified to be the
+                        best-splitting plane given the training parameters
+                        supplied. Try to play around with the parameters to see
+                        how it affects what the resulting line looks like.
+                    </p>
+                    <div className="datasetPlot">
+                        <Plot
+                            data={modelOutputScatterPlot}
+                            layout={{
+                                height: 600,
+                                margin: {
+                                    l: 30,
+                                    r: 30,
+                                    t: 60,
+                                    b: 60,
+                                },
+                                yaxis: {
+                                    range: [-2.5, 2.5],
+                                },
+                                xaxis: {
+                                    range: [-2.5, 2.5],
+                                },
+                                autosize: true,
+                                title: "Scatterplot of the dataset",
+                                showlegend: false,
+                            }}
+                            useResizeHandler
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
+                    <p>
+                        The chart below also shows the loss curve of the model,
+                        the progression of the binary cross-entropy loss showing
+                        how the model progresses towards what has been
+                        determined to be the optimal solution (depending on how
+                        the training parameters were set) after the specified
+                        number of iterations. Playing around with the parameters
+                        can also introduce changes in this graph.
+                    </p>
+                    <div className="datasetPlot">
+                        <Plot
+                            data={[
+                                {
+                                    y: trainResult.history.loss,
+                                    type: "scatter",
+                                    mode: "lines+markers",
+                                    name: "data",
+                                    marker: {
+                                        color: "#18cedb",
+                                    },
+                                },
+                            ]}
+                            layout={{
+                                xaxis: {
+                                    title: { text: "epochs" },
+                                },
+                                yaxis: {
+                                    title: { text: "binary cross-entropy" },
+                                },
+                                autosize: true,
+                                title: "Loss curve",
+                                height: 600,
+                                margin: {
+                                    l: 40,
+                                    r: 40,
+                                    t: 60,
+                                    b: 60,
+                                },
+                                legend: {
+                                    x: 0,
+                                    xanchor: "left",
+                                    y: 1,
+                                    bgcolor: "rgba(255, 255, 255, 0.5)",
+                                },
+                            }}
+                            useResizeHandler
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
                 </div>
             ) : isLoading ? (
                 <LoadingSpinner />
