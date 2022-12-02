@@ -120,7 +120,8 @@
 }
 
 .inputGroup input[type="text"],
-.inputGroup input[type="number"] {
+.inputGroup input[type="number"],
+.inputGroup select {
     font-size: var(--fs-500);
 }
 

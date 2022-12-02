@@ -5,6 +5,7 @@ import { generateCirclesDataset } from "../../../utils/classificationUtils";
 import { ActivationFunctionSection } from "./ActivationFunctionSection";
 import { ArchitectureNotationSection } from "./ArchitectureNotationSection";
 import { BackgroundSection } from "./BackgroundSection";
+import { BackpropagationSection } from "./BackpropagationSection";
 import { DatasetSection } from "./DatasetSection";
 import { ForwardPropagationSection } from "./ForwardPropagationSection";
 import { TrainingModelSection } from "./TrainingModelSection";
@@ -15,17 +16,18 @@ export default class NeuralNetworkBinary extends React.Component {
         dataset: {
             trainFeatures: [],
             trainLabels: [],
-            radii: ["5", "10"],
-            noiseFactor: 0.25,
-            numPoints: 25,
+            radii: ["0.8", "1"],
+            noiseFactor: "0.0",
+            innerRadius: "0.1",
+            numPoints: "50",
         },
     };
 
     regenerateDataset = () => {
         const [features, labels] = generateCirclesDataset(
-            this.state.dataset.radii.map((radius) => Number(radius)),
-            this.state.dataset.noiseFactor,
-            this.state.dataset.numPoints
+            [Number(this.state.dataset.innerRadius), 1.0],
+            Number(this.state.dataset.noiseFactor),
+            Number(this.state.dataset.numPoints)
         );
         this.setState((prevState) => ({
             ...prevState,
@@ -41,12 +43,32 @@ export default class NeuralNetworkBinary extends React.Component {
         this.regenerateDataset();
     }
 
+    handleDataParamChange = (event) => {
+        this.setState(
+            (prevState) => ({
+                ...prevState,
+                dataset: {
+                    ...prevState.dataset,
+                    [event.target.name]: event.target.value,
+                },
+            }),
+            () => {
+                this.regenerateDataset();
+            }
+        );
+    };
+
     render() {
         const sections = [
             {
                 id: "dataset",
                 title: "Dataset",
-                content: <DatasetSection dataset={this.state.dataset} />,
+                content: (
+                    <DatasetSection
+                        dataset={this.state.dataset}
+                        handleChangeFunc={this.handleDataParamChange}
+                    />
+                ),
             },
             {
                 id: "background",
@@ -71,7 +93,7 @@ export default class NeuralNetworkBinary extends React.Component {
             {
                 id: "backpropagation",
                 title: "Backpropagation",
-                content: <ForwardPropagationSection />,
+                content: <BackpropagationSection />,
             },
             {
                 id: "vectorized-impl",
@@ -81,7 +103,7 @@ export default class NeuralNetworkBinary extends React.Component {
             {
                 id: "training-model",
                 title: "Training the Model",
-                content: <TrainingModelSection />,
+                content: <TrainingModelSection dataset={this.state.dataset} />,
             },
         ];
         return (

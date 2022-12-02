@@ -1,0 +1,55 @@
+.layerCard {
+    border: 1px solid var(--color-neutral-700);
+}
+
+.layerCardTitlebar {
+    padding: var(--space-400);
+    border-collapse: collapse;
+    border-bottom: 1px solid var(--color-neutral-700);
+    display: flex;
+}
+
+.layerTitle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.layerDeleteBtn {
+    border: 1px solid rgb(183, 73, 73);
+    font-size: var(--fs-300);
+    display: block;
+    cursor: pointer;
+    aspect-ratio: 1;
+    color: rgb(183, 73, 73);
+    background: #fff;
+}
+
+.layerTitle {
+    font-family: var(--ff-head-primary);
+    font-weight: 400;
+}
+
+.layerCardInfo .layerPropName {
+    font-family: var(--ff-head-primary);
+    font-weight: 300;
+    font-size: var(--fs-300);
+    margin-bottom: 0rem;
+    line-height: 1rem;
+}
+.layerCardInfo .layerPropValue {
+    font-family: var(--ff-head-primary);
+    font-weight: 600;
+    font-size: var(--fs-600);
+    margin-bottom: 0rem;
+}
+
+.layerCardInfoContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.layerCardInfoContainer > * {
+    flex: 1 0 auto;
+    padding: var(--space-400);
+}

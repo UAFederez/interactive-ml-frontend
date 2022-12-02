@@ -27,7 +27,7 @@ export const generateRange = (from, to, num, func = (e) => e) => {
  * @param {Number[]} b      2nd set, shape: (n, )
  * @returns {Number[][]}    Cartesian product of set a and b, shape: (m * n, 2)
  */
-export const set_product = (a, b) => {
+export const setProduct = (a, b) => {
     return [].concat(
         ...a.map((a_elem) =>
             b.map((b_elem) =>
@@ -45,7 +45,7 @@ export const set_product = (a, b) => {
  * @param {*} b vector b
  * @returns {Number} dot product of a and b
  */
-export const dot_product = (a, b) => {
+export const dotProduct = (a, b) => {
     if (a.length !== b.length) {
         console.error(`Invalid vector dimensions ${a.length} != ${b.length}`);
     }

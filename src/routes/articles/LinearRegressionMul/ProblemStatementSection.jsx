@@ -10,7 +10,7 @@ const ProblemStatementSection = () => (
                 <MathJax inline>{"\\(x^{(i)}\\in\\mathbb{R}^n\\)"}</MathJax>,
                 for <MathJax inline>{"\\(n\\)"}</MathJax> features with{" "}
                 <MathJax inline>{"\\(i\\in[1,\\ldots,m]\\)"}</MathJax>. In this
-                particular case, <MathJax inline>{"\\(n=4\\)"}</MathJax>. The{" "}
+                particular case, <MathJax inline>{"\\(n=2\\)"}</MathJax>. The{" "}
                 <MathJax inline>{"\\(j\\)"}</MathJax>-th input feature, where{" "}
                 <MathJax inline>{"\\(j\\in[1,\\ldots,n]\\)"}</MathJax>. for the{" "}
                 <MathJax inline>{"\\(i\\)"}</MathJax>
