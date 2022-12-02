@@ -1,7 +1,8 @@
 import { MathJax } from "better-react-mathjax";
 import { useRef, useState } from "react";
 import Plot from "react-plotly.js";
-import { dot_product } from "../../../utils/math";
+import { dotProduct } from "../../../utils/math";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import styles from "./LinearRegressionMul.module.css";
 
 const TrainingModelSection = (props) => {
@@ -38,7 +39,7 @@ const TrainingModelSection = (props) => {
     let predictedZ = [];
     if (Object.keys(props.trainResult).length !== 0) {
         predictedZ = props.simpleDataset.trainX.map((x, idx) =>
-            dot_product(
+            dotProduct(
                 [x, props.simpleDataset.trainY[idx], 1],
                 props.trainResult.weights
             )

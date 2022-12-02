@@ -1,8 +1,8 @@
 import {
-    dot_product,
+    dotProduct,
     generateRandomBoxMuller,
     generateRange,
-    set_product,
+    setProduct,
 } from "./math";
 
 /**
@@ -32,7 +32,7 @@ export const generateLinearDataset = (
     // Generate all possible points given the x_values
     let x_data = x_values;
     for (let i = 0; i < coefficients.length - 1; i++) {
-        x_data = set_product(x_data, x_values);
+        x_data = setProduct(x_data, x_values);
     }
 
     // If this is the 1D case, then x_data has shape (n, ) for n datapoints
@@ -44,7 +44,7 @@ export const generateLinearDataset = (
 
     let y_values = x_data.map(
         (x) =>
-            dot_product(x, coefficients) +
+            dotProduct(x, coefficients) +
             intercept +
             noise_fac * generateRandomBoxMuller()
     );
@@ -61,7 +61,7 @@ export const evalMeanSquaredError = (coeffs, bias, dataset) => {
         (accum, x_i, idx) =>
             accum +
             (dataset.train_y[idx] -
-                (dot_product(coeffs, Array.isArray(x_i) ? x_i : [x_i]) +
+                (dotProduct(coeffs, Array.isArray(x_i) ? x_i : [x_i]) +
                     bias)) **
                 2 /
                 dataset.train_x.length,
@@ -69,7 +69,7 @@ export const evalMeanSquaredError = (coeffs, bias, dataset) => {
     );
 };
 
-export const calc_loss_landscape = (coeffs, biases, dataset) => {
+export const calcLossLandscape = (coeffs, biases, dataset) => {
     if (coeffs.length !== biases.length) {
         console.error(
             `Invalid length of coefficients and biases: ${coeffs.length} != ${biases.length}`
