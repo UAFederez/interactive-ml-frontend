@@ -2,11 +2,13 @@ import { MathJax } from "better-react-mathjax";
 import { useRef, useState } from "react";
 import Plot from "react-plotly.js";
 import { dot_product } from "../../../utils/math";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import styles from "./LinearRegressionMul.module.css";
 
 const TrainingModelSection = (props) => {
     const learningRate = useRef();
     const numEpochs = useRef();
+    const [isLoading, setLoading] = useState(false);
 
     const handleModelSubmit = async (event) => {
         event.preventDefault();
@@ -33,6 +35,7 @@ const TrainingModelSection = (props) => {
         const response = await result.json();
         console.log(response);
         props.updateTrainResultFunc(response);
+        setLoading(false);
     };
 
     let predictedZ = [];
@@ -52,7 +55,12 @@ const TrainingModelSection = (props) => {
                 linear regression model. Click on the 'Train Model' button to
                 start training the linear model.
             </span>
-            <form onSubmit={handleModelSubmit}>
+            <form
+                onSubmit={(event) => {
+                    setLoading(true);
+                    handleModelSubmit(event);
+                }}
+            >
                 <div className={styles.modelParamInput}>
                     <div className={styles.modelParamFields}>
                         <div className="inputGroup">
@@ -156,6 +164,7 @@ const TrainingModelSection = (props) => {
                         with the learning rate and number of iterations can shed
                         more light onto how it affects the training phase.
                     </p>
+
                     <div className="datasetPlot">
                         <Plot
                             data={[
@@ -199,6 +208,8 @@ const TrainingModelSection = (props) => {
                         />
                     </div>
                 </div>
+            ) : isLoading ? (
+                <LoadingSpinner />
             ) : null}
         </div>
     );

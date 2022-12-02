@@ -57,8 +57,8 @@ export const TrainingModelSection = (props) => {
 
     if (Object.keys(trainResult).length !== 0) {
         const xRange = generateRange(
-            Math.min(...props.dataset.trainFeatures[0]),
-            Math.max(...props.dataset.trainFeatures[0]),
+            Math.min(...props.dataset.trainFeatures[0], -2.5),
+            Math.max(...props.dataset.trainFeatures[0], 2.5),
             100
         );
         const yRange = xRange.map(
