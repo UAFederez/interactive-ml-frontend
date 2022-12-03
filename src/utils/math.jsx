@@ -67,6 +67,6 @@ export const generateRandomBoxMuller = () => {
  * @param {Number} right Right endpoint of the range
  * @returns {Number} A random number that is uniformly distributed in [left, right]
  */
-export const randomUniform = (left, right) => {
+export const generateRandomUniform = (left, right) => {
     return left + Math.random() * (right - left);
 };

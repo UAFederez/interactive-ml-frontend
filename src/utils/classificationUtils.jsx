@@ -23,7 +23,14 @@ export const generateCirclesDataset = (radii, noiseFactor, numPoints) => {
     return [dataPoints, dataLabels];
 };
 
-export const generateBinaryClusters = (
+/**
+ * @param {Number[][]} centroids    Each element is an [x, y] pair containing the location of the centroid
+ * @param {Number} radius           The radius of the extent of the cluster (TODO: change to Number[] for varying the radius per cluster)
+ * @param {Number} noiseFactor      Amount of noise in each position generated, 0 means they fall into the circumference given the radius
+ * @param {Number} pointsPerCluster Number of poitns per cluster
+ * @returns {[trainFeatures, trainLabels]}
+ */
+export const generateClusters = (
     centroids,
     radius,
     noiseFactor,
@@ -38,7 +45,7 @@ export const generateBinaryClusters = (
             let distance = radius + noiseFactor * generateRandomBoxMuller();
             trainFeatures[0].push(cx + Math.cos(angle) * distance);
             trainFeatures[1].push(cy + Math.sin(angle) * distance);
-            trainLabels.push(idx % 2);
+            trainLabels.push(idx % centroids.length);
         }
     });
 

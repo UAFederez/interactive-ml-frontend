@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { generateBinaryClusters } from "../../../utils/classificationUtils";
+import { generateClusters } from "../../../utils/classificationUtils";
 import "../Article.css";
 import { CostFunctionSection } from "./CostFunctionSection";
 import { DatasetSection } from "./DatasetSection";
@@ -41,7 +41,7 @@ export default class LogisticRegression extends React.Component {
     };
 
     regenerateDataset = () => {
-        const [features, labels] = generateBinaryClusters(
+        const [features, labels] = generateClusters(
             this.state.dataset.clusterCentroids,
             this.state.dataset.clusterRadius,
             this.state.dataset.noiseFactor,

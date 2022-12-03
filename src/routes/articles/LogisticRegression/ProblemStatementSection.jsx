@@ -6,7 +6,7 @@ import { sigmoid } from "../../../utils/classificationUtils";
 import {
     generateRandomBoxMuller,
     generateRange,
-    randomUniform,
+    generateRandomUniform,
 } from "../../../utils/math";
 import "../Article.css";
 import styles from "./LogisticRegression.module.css";
