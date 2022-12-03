@@ -60,7 +60,7 @@ export const GradientDescentSection = () => (
 
             <p>
                 The first factor, i.e., the derivative of the logistic function
-                is w.r.t <MathJax inline>{"\\(z\\)"}</MathJax> is,
+                w.r.t <MathJax inline>{"\\(z\\)"}</MathJax> is,
             </p>
             <div className="displayLatex">
                 <MathJax>{`\\[\\begin{align*}

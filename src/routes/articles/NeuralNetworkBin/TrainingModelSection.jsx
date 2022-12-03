@@ -1,3 +1,4 @@
+import { MathJax } from "better-react-mathjax";
 import { useEffect, useRef, useState } from "react";
 import Plot from "react-plotly.js";
 import shortid from "shortid";
@@ -29,7 +30,7 @@ export const TrainingModelSection = (props) => {
     const handleModelTrainSubmit = async (event) => {
         event.preventDefault();
         const result = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/neural-network-bin`,
+            `${import.meta.env.VITE_API_URL}/api/neural-network`,
             {
                 method: "POST",
                 headers: {
@@ -54,6 +55,7 @@ export const TrainingModelSection = (props) => {
                         ),
                         "sigmoid",
                     ],
+                    metrics: ["binary_class_accuracy"],
                     loss_function: "binary_crossentropy",
                     include_hist: true,
                 }),
@@ -65,7 +67,7 @@ export const TrainingModelSection = (props) => {
         const datasetBounds = generateRange(-2, 2, 50);
         const datasetGrid = setProduct(datasetBounds, datasetBounds);
         const gridClassificationRequest = await fetch(
-            `${import.meta.env.VITE_API_URL}/api/neural-network-bin`,
+            `${import.meta.env.VITE_API_URL}/api/neural-network`,
             {
                 method: "POST",
                 headers: {
@@ -284,7 +286,7 @@ export const TrainingModelSection = (props) => {
                                 },
                                 autosize: true,
                                 showlegend: false,
-                                title: "Scatterplot of the dataset with colored model decsion boundaries",
+                                title: "Scatterplot of the dataset with colored model decision boundaries",
                                 xaxis: {
                                     range: axisRange,
                                 },
@@ -350,6 +352,16 @@ export const TrainingModelSection = (props) => {
                             }}
                         />
                     </div>
+                    <p>
+                        The chart below shows the accuracy of the model, i.e.,
+                        what is the percentage of correctly classified instances
+                        across the dataset, where a value of{" "}
+                        <MathJax inline>{"\\(1\\)"}</MathJax> is the highest.
+                        Ideally, accuracy should increase as the number of
+                        iterations increases provided that other parameters
+                        (i.e, the learning rate, or even the architecture of the
+                        model), do not lead to underfitting.
+                    </p>
                     <div className="datasetPlot">
                         <Plot
                             data={[
@@ -376,7 +388,7 @@ export const TrainingModelSection = (props) => {
                                 },
                                 yaxis: {
                                     range: [0, 1],
-                                    title: { text: "binary cross-entropy" },
+                                    title: { text: "accuracy" },
                                 },
                                 autosize: true,
                                 title: "Loss curve",

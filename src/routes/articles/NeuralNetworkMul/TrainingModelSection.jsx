@@ -35,48 +35,51 @@ const TrainingModelSection = (props) => {
     const handleModelTrainSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await fetch(`http://localhost:5000/api/neural-network`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                train_x: [
-                    props.dataset.trainFeatures[0],
-                    props.dataset.trainFeatures[1],
-                ],
-                train_y: props.dataset.trainLabels.map((label) => {
-                    let oneHotEncoding = new Array(
-                        props.dataset.centroids.length
-                    ).fill(0);
-                    oneHotEncoding[label] = 1;
-                    return oneHotEncoding;
+        const result = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/neural-network`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    train_x: [
+                        props.dataset.trainFeatures[0],
+                        props.dataset.trainFeatures[1],
+                    ],
+                    train_y: props.dataset.trainLabels.map((label) => {
+                        let oneHotEncoding = new Array(
+                            props.dataset.centroids.length
+                        ).fill(0);
+                        oneHotEncoding[label] = 1;
+                        return oneHotEncoding;
+                    }),
+                    epochs: Number(numEpochs.current.value),
+                    learning_rate: Number(learningRate.current.value),
+                    layer_sizes: [
+                        2,
+                        ...hiddenLayers.map((layer) => layer.size),
+                        props.dataset.centroids.length,
+                    ],
+                    layer_activations: [
+                        ...hiddenLayers.map((layer) =>
+                            layer.activation.toLowerCase()
+                        ),
+                        "softmax",
+                    ],
+                    metrics: ["multiclass_accuracy"],
+                    loss_function: "categorical_crossentropy",
+                    include_hist: true,
                 }),
-                epochs: Number(numEpochs.current.value),
-                learning_rate: Number(learningRate.current.value),
-                layer_sizes: [
-                    2,
-                    ...hiddenLayers.map((layer) => layer.size),
-                    props.dataset.centroids.length,
-                ],
-                layer_activations: [
-                    ...hiddenLayers.map((layer) =>
-                        layer.activation.toLowerCase()
-                    ),
-                    "softmax",
-                ],
-                metrics: ["multiclass_accuracy"],
-                loss_function: "categorical_crossentropy",
-                include_hist: true,
-            }),
-        });
+            }
+        );
         const response = await result.json();
 
         // Calculate the decision boundaries
         const datasetBounds = generateRange(axisRange[0], axisRange[1], 50);
         const datasetGrid = setProduct(datasetBounds, datasetBounds);
         const gridClassificationRequest = await fetch(
-            `http://localhost:5000/api/neural-network`,
+            `${import.meta.env.VITE_API_URL}/api/neural-network`,
             {
                 method: "POST",
                 headers: {
