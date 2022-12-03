@@ -23,12 +23,7 @@ const Footer = () => (
                     </a>
                 </p>
                 <p>
-                    <a href="https://www.linkedin.com/in/uriel-federez-26598723b/">
-                        LinkedIn
-                    </a>
-                </p>
-                <p>
-                    <a href="https://github.com/UAFederez">Github</a>
+                    <a href="https://github.com/UAFederez">GitHub</a>
                 </p>
             </div>
         </div>
