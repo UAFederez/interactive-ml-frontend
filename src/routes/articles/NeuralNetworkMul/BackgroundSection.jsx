@@ -15,11 +15,10 @@ const BackgroundSection = (props) => {
                     <MathJax inline>
                         {"\\(y^{(i)}\\in\\{C_1,C_2,\\ldots,C_{n_c}\\}\\)"}
                     </MathJax>
+                    .
                 </p>
                 <p>
-                    One option to use for multiclass classification, also known
-                    as
-                    <em>multinomial logistic regression</em>, is a
+                    One option to use for multiclass classification is a
                     generalization of the logistic regression model for{" "}
                     <MathJax inline>{"\\(n_c>1\\)"}</MathJax> classes. This is
                     known as the <strong>Softmax</strong> function.

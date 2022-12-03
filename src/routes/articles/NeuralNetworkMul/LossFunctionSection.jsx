@@ -11,7 +11,7 @@ const LossFunctionSection = (props) => {
                     known as the <strong>categorical cross-entropy</strong>{" "}
                     function, defined as follows
                 </p>
-                <div className="display-latex">
+                <div className="displayLatex">
                     <MathJax>{`\\[L(S(z),y^{(i)})=-\\log(S(z)_j)\\quad\\text{for }y^{(i)}=C_j\\]`}</MathJax>
                 </div>
                 <p>
@@ -24,7 +24,7 @@ const LossFunctionSection = (props) => {
                     <MathJax inline>{"\\(y^{(i)}_j=0\\)"}</MathJax> otherwise.
                     This means that the loss can be defined as,
                 </p>
-                <div className="display-latex">
+                <div className="displayLatex">
                     <MathJax>{`\\[L(S(z),y^{(i)})=-\\sum_{j=1}^{n_c}y^{(i)}_j\\log\\left(S(z^{(i)})_j\\right)\\]`}</MathJax>
                 </div>
                 <h3>Similarity to logistic regression</h3>
@@ -44,7 +44,7 @@ const LossFunctionSection = (props) => {
                     similar to the logistic regression definition of the
                     probability of the positive class,
                 </p>
-                <div className="display-latex">
+                <div className="displayLatex">
                     <MathJax>
                         {`\\[\\begin{align*}
                         L(S(z),y^{(i)})

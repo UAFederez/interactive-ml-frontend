@@ -1,17 +1,108 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Footer from "../../../components/Footer/Footer";
+import { generateClusters } from "../../../utils/classificationUtils";
+import { generateRandomUniform } from "../../../utils/math";
 import BackgroundSection from "./BackgroundSection";
 import DatasetSection from "./DatasetSection";
 import GradientDescentSection from "./GradientDescentSection";
 import LossFunctionSection from "./LossFunctionSection";
+import TrainingModelSection from "./TrainingModelSection";
 
 export default class NeuralNetworkMul extends React.Component {
-    state = {};
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dataset: {
+                trainFeatures: [],
+                trainLabels: [],
+                centroids: this.chooseClustersRandomly(),
+                clusterRadius: 1.0,
+                noiseFactor: 0.25,
+                pointsPerCluster: 50,
+            },
+        };
+    }
+
+    handleDatasetParamChange = (event) => {
+        this.setState(
+            (prevState) => ({
+                ...prevState,
+                dataset: {
+                    ...prevState.dataset,
+                    [event.target.name]: Number(event.target.value),
+                },
+            }),
+            () => {
+                this.regenerateDataset();
+            }
+        );
+    };
+
+    regenerateDataset = () => {
+        const [features, labels] = generateClusters(
+            this.state.dataset.centroids,
+            this.state.dataset.clusterRadius,
+            this.state.dataset.noiseFactor,
+            this.state.dataset.pointsPerCluster
+        );
+        this.setState((prevState) => ({
+            ...prevState,
+            dataset: {
+                ...prevState.dataset,
+                trainFeatures: features,
+                trainLabels: labels,
+            },
+        }));
+    };
+
+    chooseClustersRandomly = () => {
+        const numClusters = 4;
+        const startingTheta = (Math.random() * Math.PI) / 2.0;
+        let centroids = [];
+
+        for (let i = 0; i < numClusters; i++) {
+            const theta = startingTheta + (i * (2.0 * Math.PI)) / numClusters;
+            centroids.push([
+                Math.cos(theta) * Math.SQRT2, // x
+                Math.sin(theta) * Math.SQRT2, // y
+            ]);
+        }
+        return centroids;
+    };
+
+    fullResetDataset = () => {
+        this.setState(
+            (prevState) => ({
+                ...prevState,
+                dataset: {
+                    ...prevState.dataset,
+                    centroids: this.chooseClustersRandomly(),
+                },
+            }),
+            () => {
+                this.regenerateDataset();
+            }
+        );
+    };
+
+    componentDidMount() {
+        this.regenerateDataset();
+    }
 
     render() {
         const sections = [
-            { id: "dataset", title: "Dataset", content: <DatasetSection /> },
+            {
+                id: "dataset",
+                title: "Dataset",
+                content: (
+                    <DatasetSection
+                        dataset={this.state.dataset}
+                        handleDatasetParamChange={this.handleDatasetParamChange}
+                        clusterRandomFunc={this.fullResetDataset}
+                    />
+                ),
+            },
             {
                 id: "background",
                 title: "Background",
@@ -27,13 +118,18 @@ export default class NeuralNetworkMul extends React.Component {
                 title: "Gradient Descent",
                 content: <GradientDescentSection />,
             },
+            {
+                id: "training-model",
+                title: "Training the Model",
+                content: <TrainingModelSection dataset={this.state.dataset} />,
+            },
         ];
         return (
             <main>
-                <div className="container article-header">
+                <div className="container articleHeader">
                     <div>
-                        <Link to="/">
-                            <p className="back">&#8249; Back</p>
+                        <Link to="/" className="back">
+                            <p>&#8249; Back</p>
                         </Link>
                     </div>
                     <h1 className="title">
@@ -55,9 +151,9 @@ export default class NeuralNetworkMul extends React.Component {
                         ))}
                     </div>
 
-                    <div className="bookmarks-container">
+                    <div className="bookmarksContainer">
                         <div className="bookmarks">
-                            <p className="bookmark-title">In this article</p>
+                            <p className="bookmarkTitle">In this article</p>
                             <ul>
                                 {sections.map((section) => (
                                     <li key={section.id}>
@@ -70,8 +166,6 @@ export default class NeuralNetworkMul extends React.Component {
                         </div>
                     </div>
                 </div>
-
-                <Footer />
             </main>
         );
     }
