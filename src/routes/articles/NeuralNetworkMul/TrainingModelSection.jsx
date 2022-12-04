@@ -314,7 +314,7 @@ const TrainingModelSection = (props) => {
                                     mode: "lines+markers",
                                     name: "data",
                                     marker: {
-                                        color: "#18cedb",
+                                        color: "#085454",
                                     },
                                 },
                             ]}
@@ -368,7 +368,7 @@ const TrainingModelSection = (props) => {
                                     mode: "lines+markers",
                                     name: "data",
                                     marker: {
-                                        color: "#18cedb",
+                                        color: "#085454",
                                     },
                                 },
                             ]}
@@ -383,7 +383,7 @@ const TrainingModelSection = (props) => {
                                     title: { text: "epochs" },
                                 },
                                 yaxis: {
-                                    range: [0, 1],
+                                    range: [0, 1.05],
                                     title: { text: "accuracy" },
                                 },
                                 autosize: true,

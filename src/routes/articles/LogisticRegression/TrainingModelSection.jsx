@@ -133,32 +133,91 @@ export const TrainingModelSection = (props) => {
                 </div>
             </form>
             {Object.keys(trainResult).length !== 0 ? (
-                <div className="datasetPlot">
-                    <Plot
-                        data={modelOutputScatterPlot}
-                        layout={{
-                            height: 600,
-                            margin: {
-                                l: 30,
-                                r: 30,
-                                t: 60,
-                                b: 60,
-                            },
-                            yaxis: {
-                                range: [-2.5, 2.5],
-                            },
-                            xaxis: {
-                                range: [-2.5, 2.5],
-                            },
-                            autosize: true,
-                            title: "Scatterplot of the dataset",
-                            showlegend: false,
-                        }}
-                        useResizeHandler
-                        config={{
-                            displayModeBar: false,
-                        }}
-                    />
+                <div>
+                    <p>
+                        The plot below shows the same dataset but also including
+                        line that results from the coefficients calculated from
+                        logistic regression. Ideally, the line should sit in
+                        such a way so as to seemingly divide the dataset into
+                        two halves based on their class. This is known as the{" "}
+                        <em>linear decision boundary</em>.
+                    </p>
+                    <div className="datasetPlot">
+                        <Plot
+                            data={modelOutputScatterPlot}
+                            layout={{
+                                height: 600,
+                                margin: {
+                                    l: 30,
+                                    r: 30,
+                                    t: 60,
+                                    b: 60,
+                                },
+                                yaxis: {
+                                    range: [-2.5, 2.5],
+                                },
+                                xaxis: {
+                                    range: [-2.5, 2.5],
+                                },
+                                autosize: true,
+                                title: "Scatterplot of the dataset",
+                                showlegend: false,
+                            }}
+                            useResizeHandler
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
+                    <p>
+                        The plot below shows the accuracy that the model is
+                        achieving throughout each iteration, where accuracy is
+                        simply the number of correctly classified instances
+                        measured as a percentage of the size of the dataset.
+                    </p>
+                    <div className="datasetPlot">
+                        <Plot
+                            data={[
+                                {
+                                    y: trainResult.history.accuracy_hist,
+                                    type: "scatter",
+                                    mode: "lines+markers",
+                                    name: "data",
+                                    marker: {
+                                        color: "#085454",
+                                    },
+                                },
+                            ]}
+                            layout={{
+                                margin: {
+                                    l: 40,
+                                    r: 40,
+                                    t: 60,
+                                    b: 60,
+                                },
+                                xaxis: {
+                                    title: { text: "epochs" },
+                                },
+                                yaxis: {
+                                    range: [0, 1.05],
+                                    title: { text: "accuracy" },
+                                },
+                                autosize: true,
+                                title: "Accuracy Graph",
+                                height: 600,
+                                legend: {
+                                    x: 0,
+                                    xanchor: "left",
+                                    y: 1,
+                                    bgcolor: "rgba(255, 255, 255, 0.5)",
+                                },
+                            }}
+                            useResizeHandler
+                            config={{
+                                displayModeBar: false,
+                            }}
+                        />
+                    </div>
                 </div>
             ) : isLoading ? (
                 <LoadingSpinner />

@@ -174,7 +174,7 @@ const TrainingModelSection = (props) => {
                                     mode: "lines+markers",
                                     name: "data",
                                     marker: {
-                                        color: "#18cedb",
+                                        color: "#085454",
                                     },
                                 },
                             ]}
