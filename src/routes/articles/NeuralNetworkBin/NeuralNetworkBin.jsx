@@ -17,8 +17,8 @@ export default class NeuralNetworkBinary extends React.Component {
             trainFeatures: [],
             trainLabels: [],
             radii: ["0.8", "1"],
-            noiseFactor: "0.0",
-            innerRadius: "0.1",
+            noiseFactor: "0.1",
+            innerRadius: "0.5",
             numPoints: "50",
         },
     };
@@ -41,6 +41,7 @@ export default class NeuralNetworkBinary extends React.Component {
 
     componentDidMount() {
         this.regenerateDataset();
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
 
     handleDataParamChange = (event) => {

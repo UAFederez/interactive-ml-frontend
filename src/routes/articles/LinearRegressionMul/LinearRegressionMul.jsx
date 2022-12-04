@@ -32,6 +32,7 @@ export default class LinearRegressionMul extends React.Component {
 
     componentDidMount() {
         this.regenerateDataset();
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
 
     regenerateDataset = () => {
