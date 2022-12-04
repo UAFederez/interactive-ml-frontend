@@ -1,4 +1,8 @@
-import { generateRandomBoxMuller, generateRange } from "./math";
+import {
+    generateRandomBoxMuller,
+    generateRandomUniform,
+    generateRange,
+} from "./math";
 
 export const generateCirclesDataset = (radii, noiseFactor, numPoints) => {
     let dataPoints = [[], []];
@@ -50,6 +54,18 @@ export const generateClusters = (
     });
 
     return [trainFeatures, trainLabels];
+};
+
+export const generateBlob = (numPoints, maxRadius = 1.0, center = [0, 0]) => {
+    let points = [[], []];
+    for (let i = 0; i < numPoints; i++) {
+        const radius = generateRandomUniform(0.0, maxRadius);
+        const theta = generateRandomUniform(0.0, Math.PI * 2.0);
+
+        points[0].push(center[0] + Math.cos(theta) * radius);
+        points[1].push(center[1] + Math.sin(theta) * radius);
+    }
+    return points;
 };
 
 export const sigmoid = (z) => 1 / (1 + Math.exp(-z));
