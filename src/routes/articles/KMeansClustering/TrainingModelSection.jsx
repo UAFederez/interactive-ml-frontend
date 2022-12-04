@@ -90,7 +90,7 @@ const TrainingModelSection = (props) => {
         console.log(body);
 
         const result = await fetch(
-            "http://localhost:5000/api/kmeans-clustering",
+            `${import.meta.env.VITE_API_URL}/api/kmeans-clustering`,
             {
                 method: "POST",
                 headers: {
