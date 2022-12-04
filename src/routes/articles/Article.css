@@ -31,6 +31,9 @@
 .content {
     font-family: var(--ff-body-primary);
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-500);
 }
 
 .bookmarkTitle {
@@ -51,10 +54,6 @@
     color: var(--color-secondary-400);
     background-color: rgb(115 29 216 / 0.05);
     border-left: 2px solid var(--color-secondary-400);
-}
-
-.section {
-    margin-block: var(--space-500);
 }
 
 .section:nth-of-type(1) {
@@ -97,6 +96,17 @@
 .lead,
 .lead a {
     color: var(--color-primary-400);
+}
+
+.error {
+    border-left: 2px solid var(--color-primary-400);
+    background-color: rgba(255, 71, 46, 0.05);
+    border-left: 2px solid rgb(123, 41, 41);
+}
+
+.error,
+.error a {
+    color: rgb(123, 41, 41);
 }
 
 .displayLatex {
@@ -144,6 +154,25 @@
 .inputRangeGroup label {
     margin: 0;
     margin-left: 1ch;
+}
+
+.content ol,
+.content ul {
+    padding-inline: 2em;
+}
+
+.content ol {
+    list-style: decimal;
+}
+
+.content ul {
+    list-style: circle;
+}
+
+.content ol li,
+.content ul li {
+    padding-left: 1em;
+    display: list-item;
 }
 
 .gridCols2 {
