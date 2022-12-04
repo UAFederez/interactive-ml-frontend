@@ -1,5 +1,4 @@
 .navContainer {
-    position: fixed;
     background-color: #fff;
     color: #2b2b2b;
     width: 100%;
@@ -7,7 +6,7 @@
     height: var(--nav-height);
     font-family: var(--ff-head-primary);
     font-size: var(--fs-300);
-    border-block: 1px solid rgba(43, 43, 43, 0.25);
+    border-block: 1px solid var(--color-neutral-800);
 }
 
 .navContainer > div {
@@ -21,6 +20,9 @@
 
 .navLogo {
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.1ch;
+    padding-block: var(--space-500);
 }
 
 .navMobile {
@@ -68,11 +70,6 @@
     text-decoration: none;
 }
 
-.navContainer ~ div,
-.navContainer ~ main {
-    padding-top: var(--nav-height);
-}
-
 .navDesktop {
     display: none;
 }
@@ -106,6 +103,14 @@
     aspect-ratio: 1;
 }
 
+.navContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    /* justify-content: space-between; */
+}
+
 @media (min-width: 40rem) {
     .navMobile {
         display: none;
@@ -115,12 +120,5 @@
     }
     .navDesktop {
         display: block;
-    }
-
-    .navContainer {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: space-between;
     }
 }

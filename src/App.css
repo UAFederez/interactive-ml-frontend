@@ -94,6 +94,17 @@ body {
     font-weight: 200;
 }
 
+.contentMainContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 1px - var(--nav-height));
+}
+
+.contentMainContainer > div,
+.contentMainContainer > main {
+    flex-grow: 1;
+}
+
 .fs-xl {
     font-size: var(--fs-xl);
 }

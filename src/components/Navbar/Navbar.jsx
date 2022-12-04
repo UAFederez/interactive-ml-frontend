@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 const Navbar = () => {
     const [isVisible, setVisible] = useState(false);
     const links = [
         { text: "Home", to: "/" },
-        { text: "About", to: "/" },
-        { text: "Contact", to: "/" },
+        { text: "About", to: "/about" },
+        { text: "Contact", to: "/contact" },
     ];
     return (
         <div className={styles.navContainer}>
@@ -15,6 +14,7 @@ const Navbar = () => {
                 <span className={styles.navLogo}>
                     Interactive Machine Learning
                 </span>
+                {/**
                 <button
                     className={styles.menuBtn}
                     onClick={() => {
@@ -58,8 +58,9 @@ const Navbar = () => {
                             fill="#2f2f2f"
                         ></rect>
                     </svg>
-                </button>
+                </button>*/}
             </div>
+            {/**
             <nav className={styles.navDesktop}>
                 <ul>
                     {links.map((link) => (
@@ -82,7 +83,7 @@ const Navbar = () => {
                         </li>
                     ))}
                 </ul>
-            </nav>
+                    </nav> */}
         </div>
     );
 };
