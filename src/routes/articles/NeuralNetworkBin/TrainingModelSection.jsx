@@ -124,9 +124,9 @@ export const TrainingModelSection = (props) => {
                 <h3>Model Architecture</h3>
                 <span className="lead">
                     Experiment with the values below to modify the parameters of
-                    the linear regression model, including the architecture of
-                    the model itself. Click on the 'Train Model' button to start
-                    training the linear model.
+                    the model, including the architecture of the model itself.
+                    Click on the 'Train Model' button to start training the
+                    model.
                 </span>
                 <div className={styles.modelParamInput}>
                     <div className={styles.modelParamFields}>

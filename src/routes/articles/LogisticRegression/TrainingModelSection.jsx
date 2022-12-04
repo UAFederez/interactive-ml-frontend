@@ -84,8 +84,8 @@ export const TrainingModelSection = (props) => {
         <div>
             <span className="lead">
                 Experiment with the values below to modify the parameters of the
-                linear regression model. Click on the 'Train Model' button to
-                start training the linear model.
+                logistic regression model. Click on the 'Train Model' button to
+                start training the model.
             </span>
             <form
                 onSubmit={(event) => {

@@ -138,7 +138,7 @@ const TrainingModelSection = (props) => {
                     Experiment with the values below to modify the parameters of
                     the model, including the architecture of the model itself.
                     Click on the 'Train Model' button to start training the
-                    linear model.
+                    model.
                 </span>
                 <div className={styles.modelParamInput}>
                     <div className={styles.modelParamFields}>
