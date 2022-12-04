@@ -10,10 +10,10 @@ const Footer = () => (
             <div>
                 <p>Built with</p>
                 <p>ReactJS</p>
+                <p>Plotly JS</p>
+                <p>better-react-mathjax</p>
                 <p>Flask RESTful</p>
-                <p>Python</p>
-                <p>Numpy</p>
-                <p>Custom CSS</p>
+                <p>NumPy</p>
             </div>
             <div>
                 <p>Contact</p>
@@ -23,7 +23,25 @@ const Footer = () => (
                     </a>
                 </p>
                 <p>
-                    <a href="https://github.com/UAFederez">GitHub</a>
+                    <a href="https://github.com/UAFederez" target="_blank">
+                        GitHub
+                    </a>
+                </p>
+                <p>
+                    <a
+                        href="https://github.com/UAFederez/interactive-ml-frontend"
+                        target="_blank"
+                    >
+                        GitHub Repo (Frontend)
+                    </a>
+                </p>
+                <p>
+                    <a
+                        href="https://github.com/UAFederez/interactive-ml-backend"
+                        target="_blank"
+                    >
+                        GitHub Repo (API)
+                    </a>
                 </p>
             </div>
         </div>
