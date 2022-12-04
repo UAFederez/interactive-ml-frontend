@@ -16,6 +16,7 @@ import LossFunctionSection from "./LossFunctionSection";
 import ProblemStatementSection from "./ProblemStatementSection";
 import styles from "./LinearRegressionUni.module.css";
 import TrainingModelSection from "./TrainingModelSection";
+import MeanSquaredErrorSection from "./MeanSquaredErrorSection";
 
 export default class LinearRegressionUni extends React.Component {
     state = {
@@ -93,6 +94,65 @@ export default class LinearRegressionUni extends React.Component {
     };
 
     render() {
+        const sections = [
+            {
+                id: "dataset",
+                title: "Dataset",
+                content: (
+                    <DatasetSection
+                        dataset={this.state.dataset}
+                        handleInputChange={this.handleInputChange}
+                    />
+                ),
+            },
+            {
+                id: "problem-statement",
+                title: "Problem Statement",
+                content: <ProblemStatementSection />,
+            },
+            {
+                id: "cost-function",
+                title: "Cost Function",
+                content: (
+                    <LossFunctionSection
+                        dataset={this.state.dataset}
+                        lossLandscape={this.state.lossLandscape}
+                        updateLossLandscapeFunc={this.handleUpdateLossLandscape}
+                    />
+                ),
+            },
+            {
+                id: "mean-squared-err",
+                title: "Why Use Mean Squared Error?",
+                content: <MeanSquaredErrorSection />,
+            },
+            {
+                id: "gradient-descent",
+                title: "Gradient Descent",
+                content: <GradientDescentSection />,
+            },
+            {
+                id: "calculating-gradient",
+                title: "Calculating the Gradient",
+                content: <CalculatingGradientSection />,
+            },
+            {
+                id: "training-model",
+                title: "Training the Model",
+                content: (
+                    <TrainingModelSection
+                        dataset={this.state.dataset}
+                        lossLandscape={this.state.lossLandscape}
+                    />
+                ),
+            },
+            {
+                id: "direct-solution",
+                title: "Analytical Solution",
+                content: <AnalyticalSolutionSection />,
+            },
+        ];
+
         return (
             <main>
                 <div className="container articleHeader">
@@ -105,86 +165,28 @@ export default class LinearRegressionUni extends React.Component {
                 </div>
                 <div className="container article">
                     <div className="content">
-                        <div className="section" id="dataset">
-                            <h2>Dataset</h2>
-                            <DatasetSection
-                                dataset={this.state.dataset}
-                                handleInputChange={this.handleInputChange}
-                            />
-                        </div>
-                        <div id="problem-statement" className="section">
-                            <h2>Problem Statement</h2>
-                            <ProblemStatementSection />
-                        </div>
-                        <div id="cost-function" className="section">
-                            <h2>Cost Function</h2>
-                            <LossFunctionSection
-                                dataset={this.state.dataset}
-                                lossLandscape={this.state.lossLandscape}
-                                updateLossLandscapeFunc={
-                                    this.handleUpdateLossLandscape
-                                }
-                            />
-                        </div>
-                        <div id="gradient-descent" className="section">
-                            <h2>Gradient Descent</h2>
-                            <GradientDescentSection />
-                        </div>
-                        <div id="calculating-gradient" className="section">
-                            <h2>Calculating the Gradient</h2>
-                            <CalculatingGradientSection />
-                        </div>
-                        <div id="training-model" className="section">
-                            <h2>Training the Model</h2>
-                            <TrainingModelSection
-                                dataset={this.state.dataset}
-                                lossLandscape={this.state.lossLandscape}
-                            />
-                        </div>
-                        <div className="section" id="direct-solution">
-                            <h2>Analytical Solution</h2>
-                            <AnalyticalSolutionSection />
-                        </div>
+                        {sections.map((section) => (
+                            <div
+                                className="section"
+                                id={section.id}
+                                key={section.id}
+                            >
+                                <h2>{section.title}</h2>
+                                {section.content}
+                            </div>
+                        ))}
                     </div>
                     <div className="bookmarksContainer">
                         <div>
                             <p className="bookmarkTitle">In this article</p>
                             <ul>
-                                <li>
-                                    <a href="#dataset">
-                                        <p>Dataset</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#problem-statement">
-                                        <p>Problem Statement</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#cost-function">
-                                        <p>Cost Function</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#gradient-descent">
-                                        <p>Gradient Descent</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#calculating-gradient">
-                                        <p>Calculating the Gradient</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#training-model">
-                                        <p>Training the Model</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#direct-solution">
-                                        <p>Analytical Solution</p>
-                                    </a>
-                                </li>
+                                {sections.map((section) => (
+                                    <li key={section.id}>
+                                        <a href={`#${section.id}`}>
+                                            <p>{section.title}</p>
+                                        </a>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

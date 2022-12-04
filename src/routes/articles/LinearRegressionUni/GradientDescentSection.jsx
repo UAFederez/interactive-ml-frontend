@@ -6,8 +6,7 @@ const GradientDescentSection = () => (
         <p>
             Gradient descent is an iterative algorithm that allows for a linear
             regression model &mdash; and many other more complex deep learning
-            models &mdash; to arrive at a minimum of any continuous and
-            differentiable function.
+            models &mdash; to arrive at a minimum of the loss function.
         </p>
         <p>
             The idea is that given <MathJax inline>{"\\(w\\)"}</MathJax> and{" "}
