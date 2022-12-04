@@ -47,7 +47,7 @@ const LandingPage = () => {
             title: "K-means Clustering",
             description:
                 "Birds of a feather flock together. K-means clustering is a model that aims to provide answers to such questions without a definitive or known classification of data to instead find discernable groupings or clusters within the data.",
-            link: "/",
+            link: "/kmeans-clustering",
         },
     ];
 

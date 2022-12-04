@@ -9,6 +9,7 @@ import LogisticRegression from "./routes/articles/LogisticRegression/LogisticReg
 import NeuralNetworkBinary from "./routes/articles/NeuralNetworkBin/NeuralNetworkBin";
 import NeuralNetworkMul from "./routes/articles/NeuralNetworkMul/NeuralNetworkMul";
 import Footer from "./components/Footer/Footer";
+import KMeansClustering from "./routes/articles/KMeansClustering/KMeansClustering";
 
 function App() {
     return (
@@ -37,6 +38,10 @@ function App() {
                         <Route
                             path="neural-network-mul"
                             element={<NeuralNetworkMul />}
+                        />
+                        <Route
+                            path="kmeans-clustering"
+                            element={<KMeansClustering />}
                         />
                     </Route>
                 </Routes>
