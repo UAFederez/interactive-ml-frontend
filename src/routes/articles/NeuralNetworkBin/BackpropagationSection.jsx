@@ -24,9 +24,10 @@ export const BackpropagationSection = () => {
 
                 <p>
                     In order to simplify the calculations, subsequent
-                    derivations calculated the gradient of the <em>loss</em> of
-                    any training example. As an example, given a particular
-                    weight <MathJax inline>{"\\(w^{[l]}_{j,k}\\)"}</MathJax>
+                    derivations show how to calculate the gradient of the{" "}
+                    <em>loss</em> of any training example. As an example, given
+                    a particular weight{" "}
+                    <MathJax inline>{"\\(w^{[l]}_{j,k}\\)"}</MathJax>
                 </p>
                 <div className="displayLatex">
                     <MathJax>{`\\[\\nabla_{w^{[l]}_{j,k}}L(\\hat{y}^{(i)},y^{(i)})\\\\
@@ -67,7 +68,7 @@ export const BackpropagationSection = () => {
                 </div>
 
                 <p>
-                    A particular weight{" "}
+                    For a particular weight{" "}
                     <MathJax inline>{"\\(w^{[l]}_{j,k}\\)"}</MathJax>, the
                     gradient of the loss w.r.t such weight was previously
                     defined as,
@@ -89,7 +90,7 @@ export const BackpropagationSection = () => {
                 </div>
 
                 <p>
-                    Thus the partial of{" "}
+                    Thus the partial derivative of{" "}
                     <MathJax inline>{"\\(z^{[l]}_k\\)"}</MathJax> w.r.t{" "}
                     <MathJax inline>{"\\(w^{[l]}_{j,k}\\)"}</MathJax>,
                 </p>
@@ -144,7 +145,7 @@ export const BackpropagationSection = () => {
                     It is also important to find the gradient of the loss w.r.t
                     the <em>activations</em> of the previous layer, i.e,{" "}
                     <MathJax inline>{"\\(\\delta^{[l-1]}\\)"}</MathJax> as this
-                    is necessary for the backpropagation.
+                    is necessary for the subsequent step in backpropagation.
                 </p>
                 <div className="displayLatex">
                     <MathJax>{`\\[\\begin{align*}
@@ -163,7 +164,7 @@ export const BackpropagationSection = () => {
                 </div>
 
                 <p>
-                    Thus the partial of{" "}
+                    Thus the partial derivative of{" "}
                     <MathJax inline>{"\\(z^{[l]}_k\\)"}</MathJax> w.r.t to an
                     activation <MathJax inline>{"\\(a^{[l-1]}_j\\)"}</MathJax>{" "}
                     is,

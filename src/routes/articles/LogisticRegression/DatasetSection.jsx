@@ -108,8 +108,8 @@ export const DatasetSection = (props) => {
                 The plot above shows a scatterplot of the dataset containing two
                 identifiable clusters, each with one of two (and only two)
                 colors. You may have a dataset that has customer statistics
-                along with a variable of whether they churned or not. Perhaps
-                you have medical data about patients and another target variable
+                along with a yes/no indicator of customer churn. Perhaps you
+                have medical data about patients and another target variable
                 representing whether they have a particular disease. These may
                 be binary classes of any kind but the noticeable property is
                 that we can envision a <em>straight line</em> that best splits

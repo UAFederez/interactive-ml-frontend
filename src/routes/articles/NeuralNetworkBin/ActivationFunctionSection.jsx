@@ -9,7 +9,7 @@ export const ActivationFunctionSection = () => {
                     The activation function{" "}
                     <MathJax inline>{"\\(g(z)\\)"}</MathJax> for neural networks
                     represents a nonlinear output or signal from a neuron given
-                    it's inputs. Common choices for these activation functions
+                    its inputs. Common choices for these activation functions
                     vary depending on the application but the ones typically
                     used for the hidden layers are the <strong>ReLU</strong>,
                     denoted as{" "}
