@@ -6,14 +6,29 @@ import { evalMeanSquaredError } from "../../../utils/linear_regression_utils";
 import { generateRange } from "../../../utils/math";
 
 const LossFunctionSection = (props) => {
+    const [testPoints3d, setTestPoints3d] = useState({ x: [], y: [], z: [] });
     const computeLossLandscape = () => {
         const SIZE = 25;
         const test_points = generateRange(-10, 10, SIZE);
-        const loss_values = test_points.map((x_i) =>
-            test_points.map((x_j) =>
-                evalMeanSquaredError([x_i], x_j, props.dataset)
-            )
-        );
+        let testPointsX = [];
+        let testPointsY = [];
+        let testPointsZ = [];
+        const loss_values = test_points.map((x_i) => {
+            return test_points.map((x_j) => {
+                const cost = evalMeanSquaredError([x_i], x_j, props.dataset);
+                testPointsX.push(x_i);
+                testPointsY.push(x_j);
+                testPointsZ.push(cost);
+
+                return cost;
+            });
+        });
+
+        setTestPoints3d({
+            x: testPointsX,
+            y: testPointsY,
+            z: testPointsZ,
+        });
 
         props.updateLossLandscapeFunc({
             testPoints: test_points,
@@ -124,6 +139,80 @@ const LossFunctionSection = (props) => {
                         },
                         autosize: true,
                         title: "Contour plot of the loss function",
+                    }}
+                    useResizeHandler
+                    config={{
+                        displayModeBar: false,
+                    }}
+                />
+            </div>
+            <p>
+                The convex nature of the function itself is more apparent and
+                easily visualizable given another 3-dimensional plot as you can
+                see below. As before, the <em>lowest</em> point can be
+                identified based on the location of the minimum point and is
+                based on whatever values you may have set above. Any other{" "}
+                <em>guess</em> by the model will incur additional loss.
+            </p>
+            <div className="datasetPlot">
+                <Plot
+                    data={[
+                        {
+                            opacity: 0.8,
+                            color: "rgb(300,100,200)",
+                            x: testPoints3d.x,
+                            y: testPoints3d.y,
+                            z: testPoints3d.z,
+                            type: "mesh3d",
+                            intensity: testPoints3d.z,
+                            showscale: false,
+                            colorscale: "Portland",
+                        },
+                        {
+                            x: [props.dataset.trueBias],
+                            y: [props.dataset.trueCoeff],
+                            z: [
+                                evalMeanSquaredError(
+                                    [props.dataset.trueCoeff],
+                                    props.dataset.trueBias,
+                                    props.dataset
+                                ),
+                            ],
+                            type: "scatter3d",
+                            mode: "markers",
+                            name: "True parameters",
+                            marker: {
+                                color: "#f2f2f2",
+                                size: 5,
+                                line: { width: 1 },
+                            },
+                        },
+                    ]}
+                    layout={{
+                        xaxis: {
+                            title: { text: "intercept" },
+                            range: [-10, 10],
+                        },
+                        yaxis: {
+                            title: { text: "coefficient" },
+                            range: [-10, 10],
+                        },
+                        height: 600,
+                        margin: {
+                            l: 30,
+                            r: 30,
+                            t: 60,
+                            b: 60,
+                        },
+                        showlegend: true,
+                        legend: {
+                            x: 0,
+                            xanchor: "left",
+                            y: 0,
+                            bgcolor: "rgba(255, 255, 255, 0.5)",
+                        },
+                        autosize: true,
+                        title: "3D mesh plot of the loss function",
                     }}
                     useResizeHandler
                     config={{
