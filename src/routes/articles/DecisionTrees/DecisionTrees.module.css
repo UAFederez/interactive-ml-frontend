@@ -1,0 +1,64 @@
+.datasetParamInput {
+  display: flex;
+  gap: var(--space-400);
+  flex-direction: column;
+}
+
+.inputFields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-400);
+}
+
+.modelParamInput {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-400);
+  margin-bottom: var(--space-400);
+}
+
+.modelParamFields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-400);
+}
+
+.buttonField {
+  display: flex;
+  justify-content: center;
+}
+
+.layerCardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400);
+  margin-block: var(--space-400);
+}
+
+@media screen and (min-width: 60rem) {
+  .modelParamFields {
+    grid-template-columns: 1fr 1fr;
+  }
+  .inputFields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.graphvizPlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.graphvizPlot > * {
+  flex: 1;
+}
+
+.graphvizPlot > div {
+  width: 100%;
+}
+
+.graphvizPlot svg {
+  width: 100%;
+}
