@@ -67,16 +67,9 @@ const LandingPage = () => {
       title: "Decision trees for classification",
       description: (
         <p>
-          This article is currently a work in progress but an implementation is
-          available as a Jupyter notebook{" "}
-          <a
-            href="https://github.com/UAFederez/MachineLearning/blob/master/06-Decision_Trees_Classification.ipynb"
-            target="_blank"
-          >
-            here
-          </a>
-          . Decision trees provide a model that classifies records through a
-          series of decisions about each of its features.
+          Another prominent and powerful tool commonly used in machine learning
+          problems, decision trees provide a model that classifies records
+          through a series of decisions about each of its features.
         </p>
       ),
       link: "/decision-trees",
