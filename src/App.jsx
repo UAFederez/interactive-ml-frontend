@@ -8,6 +8,7 @@ import LinearRegressionMul from "./routes/articles/LinearRegressionMul/LinearReg
 import LogisticRegression from "./routes/articles/LogisticRegression/LogisticRegression";
 import NeuralNetworkBinary from "./routes/articles/NeuralNetworkBin/NeuralNetworkBin";
 import NeuralNetworkMul from "./routes/articles/NeuralNetworkMul/NeuralNetworkMul";
+import DecisionTrees from "./routes/articles/DecisionTrees/DecisionTrees";
 import Footer from "./components/Footer/Footer";
 import KMeansClustering from "./routes/articles/KMeansClustering/KMeansClustering";
 import NotFoundPage from "./routes/NotFoundPage/NotFoundPage";
@@ -44,6 +45,10 @@ function App() {
                             <Route
                                 path="kmeans-clustering"
                                 element={<KMeansClustering />}
+                            />
+                            <Route
+                                path="decision-trees"
+                                element={<DecisionTrees />}
                             />
                         </Route>
                         <Route path="*" element={<NotFoundPage />} />
