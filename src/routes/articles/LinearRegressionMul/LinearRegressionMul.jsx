@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { generateLinearDataset } from "../../../utils/linear_regression_utils";
+import { generateLinearDataset } from "../../../utils/linearRegressionUtils";
 import DatasetSection from "./DatasetSection";
 import GradientDescentSection from "./GradientDescentSection";
 import NormalEquationsSection from "./NormalEquationsSection";

@@ -1,12 +1,6 @@
 import React from "react";
-import Plot from "react-plotly.js";
 import { Link } from "react-router-dom";
-import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
-import {
-    evalMeanSquaredError,
-    generateLinearDataset,
-} from "../../../utils/linear_regression_utils";
-import { generateRange } from "../../../utils/math";
+import { generateLinearDataset } from "../../../utils/linearRegressionUtils";
 import "../Article.css";
 import AnalyticalSolutionSection from "./AnalyticalSolutionSection";
 import CalculatingGradientSection from "./CalculatingGradientSection";
@@ -14,7 +8,6 @@ import GradientDescentSection from "./GradientDescentSection";
 import DatasetSection from "./DatasetSection";
 import LossFunctionSection from "./LossFunctionSection";
 import ProblemStatementSection from "./ProblemStatementSection";
-import styles from "./LinearRegressionUni.module.css";
 import TrainingModelSection from "./TrainingModelSection";
 import MeanSquaredErrorSection from "./MeanSquaredErrorSection";
 

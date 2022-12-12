@@ -2,7 +2,7 @@ import { MathJax } from "better-react-mathjax";
 import { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import StaticLatexSection from "../../../components/StaticLatexSection";
-import { evalMeanSquaredError } from "../../../utils/linear_regression_utils";
+import { evalMeanSquaredError } from "../../../utils/linearRegressionUtils";
 import { generateRange } from "../../../utils/math";
 
 const LossFunctionSection = (props) => {
