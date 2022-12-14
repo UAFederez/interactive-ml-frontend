@@ -10,12 +10,12 @@
  * @returns {Number[]}  `num` evenly spaced numbers within [from, to]
  */
 export const generateRange = (from, to, num, func = (e) => e) => {
-    if (to <= from) {
-        return [];
-    }
-    const step = (to - from) / num;
-    let result = new Array(num).fill(0).map((e, idx) => func(idx));
-    return result.map((elem) => from + elem * step);
+  if (to == from) {
+    return [];
+  }
+  const step = (to - from) / num;
+  let result = new Array(num).fill(0).map((e, idx) => func(idx));
+  return result.map((elem) => from + elem * step);
 };
 
 /**
@@ -28,15 +28,13 @@ export const generateRange = (from, to, num, func = (e) => e) => {
  * @returns {Number[][]}    Cartesian product of set a and b, shape: (m * n, 2)
  */
 export const setProduct = (a, b) => {
-    return [].concat(
-        ...a.map((a_elem) =>
-            b.map((b_elem) =>
-                Array.isArray(a_elem)
-                    ? a_elem.concat([b_elem])
-                    : [a_elem, b_elem]
-            )
-        )
-    );
+  return [].concat(
+    ...a.map((a_elem) =>
+      b.map((b_elem) =>
+        Array.isArray(a_elem) ? a_elem.concat([b_elem]) : [a_elem, b_elem]
+      )
+    )
+  );
 };
 
 /**
@@ -46,19 +44,19 @@ export const setProduct = (a, b) => {
  * @returns {Number} dot product of a and b
  */
 export const dotProduct = (a, b) => {
-    if (a.length !== b.length) {
-        console.error(`Invalid vector dimensions ${a.length} != ${b.length}`);
-    }
-    return a.reduce((accum, curr, idx) => accum + curr * b[idx], 0.0);
+  if (a.length !== b.length) {
+    return 0.0;
+  }
+  return a.reduce((accum, curr, idx) => accum + curr * b[idx], 0.0);
 };
 
 // Obtain a random variable that is approximately
 // distributed by a Gaussian (mu = 0, var = 1)
 // From: https://stackoverflow.com/questions/25582882/javascript-math-random-normal-distribution-gaussian-bell-curve
 export const generateRandomBoxMuller = () => {
-    let u = 1 - Math.random();
-    let v = Math.random();
-    return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+  let u = 1 - Math.random();
+  let v = Math.random();
+  return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
 };
 
 /**
@@ -68,5 +66,5 @@ export const generateRandomBoxMuller = () => {
  * @returns {Number} A random number that is uniformly distributed in [left, right]
  */
 export const generateRandomUniform = (left, right) => {
-    return left + Math.random() * (right - left);
+  return left + Math.random() * (right - left);
 };
